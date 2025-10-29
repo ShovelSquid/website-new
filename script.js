@@ -168,6 +168,95 @@ function addGalleryItem(myclass, type, src, descriptionText) {
     });
 }
 
-// <div class="gallery-item" data-type="image" data-src="images/project1.gif" data-description="My first game project - a pixel art adventure!">
-//     <img src="images/project1.gif" title="Project 1">
-// </div>
+// Discord username copy functionality
+function copyDiscordUsername() {
+    const username = 'shovelsquid';
+    
+    // Try to copy to clipboard
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(username).then(function() {
+            showCopyNotification('Discord username copied to clipboard!');
+        }).catch(function(err) {
+            console.error('Failed to copy: ', err);
+            fallbackCopyTextToClipboard(username, 'Discord username copied to clipboard!');
+        });
+    } else {
+        // Fallback for older browsers
+        fallbackCopyTextToClipboard(username, 'Discord username copied to clipboard!');
+    }
+}
+
+// Email address copy functionality
+function copyEmailAddress() {
+    const email = 'kaelenscook@shovelsquid.com';
+    
+    // Try to copy to clipboard
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(email).then(function() {
+            showCopyNotification('Email address copied to clipboard!');
+        }).catch(function(err) {
+            console.error('Failed to copy: ', err);
+            fallbackCopyTextToClipboard(email, 'Email address copied to clipboard!');
+        });
+    } else {
+        // Fallback for older browsers
+        fallbackCopyTextToClipboard(email, 'Email address copied to clipboard!');
+    }
+}
+
+// Fallback copy method
+function fallbackCopyTextToClipboard(text, successMessage) {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.top = "0";
+    textArea.style.left = "0";
+    textArea.style.position = "fixed";
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    
+    try {
+        const successful = document.execCommand('copy');
+        if (successful) {
+            showCopyNotification(successMessage || 'Copied to clipboard!');
+        } else {
+            showCopyNotification('Copy failed. Text: ' + text);
+        }
+    } catch (err) {
+        showCopyNotification('Copy failed. Text: ' + text);
+    }
+    
+    document.body.removeChild(textArea);
+}
+
+// Show copy notification
+function showCopyNotification(message) {
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.textContent = message;
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: rgba(48, 143, 146, 0.9);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        z-index: 1000;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        transition: opacity 0.3s ease;
+    `;
+    
+    document.body.appendChild(notification);
+    
+    // Remove notification after 3 seconds
+    setTimeout(() => {
+        notification.style.opacity = '0';
+        setTimeout(() => {
+            if (document.body.contains(notification)) {
+                document.body.removeChild(notification);
+            }
+        }, 300);
+    }, 3000);
+}
