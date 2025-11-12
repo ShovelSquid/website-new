@@ -4,14 +4,39 @@ const root = ReactDOM.createRoot(domNode);
 function Header() {
 
     const pages = ["About", "Projects", "Contact", "Links", "Blog"];
+    const [state, setState] = React.useState(null);
 
-    return <div className="main">
-        <Title title="Kaelen Cook" id="main"/>
+    function handleClick(page) {
+        if (page == "About") {
+            window.location.href = "#about";
+            setState("about");
+        }
+        if (page == "Projects") {
+            window.location.href = "#projects";
+            setState("projects");
+        }
+        if (page == "Contact") {
+            window.location.href = "#contact";
+            setState("contact");
+        }
+        if (page == "Links") {
+            window.location.href = "#links";
+            setState("links");
+        }
+        if (page == "Blog") {
+            window.location.href = "#blog";
+            setState("blog");
+        }
+        console.log(`You clicked ${page}`);
+    }
+
+    return <div className={`main ${state || ''}`}>
+        <Title title="Kaelen Cook" id="main" />
         <Title title="Artist & Developer" id="sub"/>
         <div id="buttonContainer">
         <div id="buttons">
             {pages.map((page) => (
-                <Button key={page} page={page} className="nav" onClick={() => console.log(`You clicked ${page}`)} image={null} />
+                <Button key={page} page={page} className="nav" onClick={() => handleClick(page)} image={null} />
             ))}
         </div>
         </div>

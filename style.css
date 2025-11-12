@@ -64,20 +64,52 @@ body {
 
 
 .main {
-
     text-align: center;
-
-
+    
+    /* Comprehensive transition for all properties */
+    transition: all 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
+.main.about {
+    background-color: rgba(124, 226, 187, 0.1);
+}
 
+.main.projects {
+    background-color: rgba(255, 99, 72, 0.1);
+}
+
+.main.contact {
+    background-color: rgba(144, 238, 144, 0.1);
+}
+
+.main.links {
+    background-color: rgba(255, 182, 193, 0.1);
+}
+
+.main.blog {
+    background-color: rgba(221, 160, 221, 0.1);
+}
+
+/* Title transitions */
 .main #main {
     position: flex;
     inset: 0;
     font-weight: 100;
     width: 35%;
-    /* height: fit-content; */
     margin: 24vh 32vw;
+    
+    /* Smooth transitions for position and styling changes */
+    transition: all 0.6s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+}
+
+.main.projects #main {
+    position: flex;
+    inset: 0;
+    text-align: left;
+    font-weight: 100;
+    width: 35%;
+    margin: 10vh 6vw;
 }
 
 .main #sub {
@@ -86,9 +118,20 @@ body {
     font-weight: 300;
     font-size: 1.2em;
     width: 35%;
-    /* border-bottom: 0px red; */
-    /* height: fit-content; */
     margin: -23.5vh 32vw;
+    
+    /* Smooth transitions for subtitle */
+    transition: all 0.6s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.main.projects #sub {
+    position: flex;
+    text-align: left;
+    inset: 0;
+    font-weight: 300;
+    font-size: 1.2em;
+    width: 35%;
+    margin: -10vh 6vw;
 }
 
 .button {
@@ -102,11 +145,16 @@ body {
 }
 
 #buttons {
+    /* background-color: tomato; */
+}
+
+.main #buttons {
     position: flex;
     /* display: flex; */
     /* border-top: 2px solid rgb(255, 0, 0); */
     justify-content: center;
     margin: 32vh 0;
+    transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 #buttons button {
@@ -123,6 +171,14 @@ body {
     border-radius: 50%;
     vertical-align: top;
     display: inline-block;
+}
+
+.main.projects #buttons {
+    position: flex;
+    /* display: flex; */
+    /* border-top: 2px solid rgb(255, 0, 0); */
+    justify-content: center;
+    margin: 78vh 0;
 }
 
 #buttons button:hover {
