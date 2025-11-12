@@ -26,7 +26,7 @@ function Page() {
 
     return <div>
         <Header />
-        <button onClick={handleClick}>Click {value}</button>
+        {/* <button onClick={handleClick}>Click {value}</button> */}
     </div>;
 }
 
