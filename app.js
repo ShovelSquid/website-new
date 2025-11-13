@@ -1,15 +1,32 @@
 const domNode = document.getElementById('app');
 const root = ReactDOM.createRoot(domNode);
 
+function Projects() {
+    const sections = ["3d Animation", "Concept Art", "Development", "Photography", 
+                        "Graphic Design", "Writing", "Game Development", "Web Development", 
+                        "Animation", "UI/UX Design", "Music Composition", "Video Production", 
+                        "3D Modeling", "Motion Graphics", "Sound Design", "Interactive Media"
+    ];
+    // const sections = ["Nople"];
+    return <div className="projectSection">
+        {sections.map((section) => (
+            <Interactitle key={section} title={section} />
+        ))}
+    </div>;
+}
+
 function Header() {
 
     const pages = ["About", "Projects", "Contact", "Links", "Blog"];
     const [state, setState] = React.useState(null);
+    let content = null;
 
     function handleClick(page) {
         if (page == "About") {
             window.location.href = "#about";
             setState("about");
+            content = <Title title="About Me" />;
+            console.log()
         }
         if (page == "Projects") {
             window.location.href = "#projects";
@@ -33,6 +50,11 @@ function Header() {
     return <div className={`main ${state || ''}`}>
         <Title title="Kaelen Cook" id="main" />
         <Title title="Artist & Developer" id="sub"/>
+        {state === "about" && <Title title="About Me" />}
+        {state === "projects" && <Projects />}
+        {state === "contact" && <Title title="Contact Me" />}
+        {state === "links" && <Title title="Links" />}
+        {state === "blog" && <Title title="Blog" />}
         <div id="buttonContainer">
         <div id="buttons">
             {pages.map((page) => (
@@ -58,6 +80,10 @@ function Page() {
 
 function Title({title, className, id}) {
     return <h1 id={id ? id : ""} className={className ? className : ""}>{title ? title : "Hello"}</h1>;
+}
+
+function Interactitle({title, className, id, onClick}) {
+    return <h1 id={id ? id : ""} className={className ? className : ""} onClick={onClick}>{title ? title : "Hello"}</h1>;
 }
 
 function Button({image, className, onClick, page}) {
