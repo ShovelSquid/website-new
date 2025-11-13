@@ -36,7 +36,7 @@ function Header() {
         <div id="buttonContainer">
         <div id="buttons">
             {pages.map((page) => (
-                <Button key={page} page={page} className="nav" onClick={() => handleClick(page)} image={null} />
+                <Button key={page} page={page} className="nav" onClick={() => handleClick(page)} image={"assets/icons/"+page+".svg"} />
             ))}
         </div>
         </div>
@@ -61,8 +61,34 @@ function Title({title, className, id}) {
 }
 
 function Button({image, className, onClick, page}) {
+    const [svgContent, setSvgContent] = React.useState('');
+
+    React.useEffect(() => {
+        // Load SVG file and modify it for CSS control
+        fetch(`assets/icons/${page}.svg`)
+            .then(response => response.text())
+            .then(svgText => {
+                // Modify SVG to use currentColor for CSS control
+                const modifiedSvg = svgText
+                    .replace(/fill="[^"]*"/g, 'fill="currentColor"')
+                    .replace(/stroke="[^"]*"/g, 'stroke="currentColor"')
+                    .replace(/<svg[^>]*>/, match => 
+                        match.replace(/width="[^"]*"/, 'width="50"')
+                             .replace(/height="[^"]*"/, 'height="50"')
+                    );
+                setSvgContent(modifiedSvg);
+            })
+            .catch(() => {
+                // Fallback if file doesn't exist
+                setSvgContent(`<svg width="50" height="50" viewBox="0 0 24 24"><text x="12" y="12" text-anchor="middle" fill="currentColor">${page}</text></svg>`);
+            });
+    }, [page]);
+
     return <button className={className ? className : "button"} onClick={onClick}>
-        {image ? <img src={image} alt="Button Image" /> : page ? page : "Button"}
+        <div 
+            className={`icon icon-${page?.toLowerCase()}`}
+            dangerouslySetInnerHTML={{__html: svgContent}} 
+        />
     </button>;
 }
 
