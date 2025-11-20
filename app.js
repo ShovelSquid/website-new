@@ -2,10 +2,7 @@ const domNode = document.getElementById('app');
 const root = ReactDOM.createRoot(domNode);
 
 function Projects({section, onSelect}) {
-    const sections = ["3D Animation", "Concept Art", "Development", "Photography", 
-                        "Graphic Design", "Writing", "Game Development", "Web Development", 
-                        "Animation", "UI/UX Design", "Music Composition", "Video Production", 
-                        "3D Modeling", "Motion Graphics", "Sound Design", "Interactive Media"
+    const sections = ["3D Animation", "Concept Art", "Games", "Pixel Art",
     ];
 
     // function onSelect(section) {
@@ -15,6 +12,57 @@ function Projects({section, onSelect}) {
     return <div className="projectSection">
         {sections.map((section) => (
             <Interactitle key={section} title={section} onClick={() => onSelect(section)} />
+        ))}
+        <ProjectCollection section={section} />
+    </div>;
+}
+
+function ProjectCollection({section}) {
+    const filepath = "assets/portfolio/" + section + "/";
+    // const imageFiles = [".png", ".jpg", ".jpeg", ".gif"];
+    // const videoFiles = [".mp4", ".webm", ".ogg"];
+    const [proj, setProj] = React.useState(null);
+    const files = {
+        "3D Animation": [
+            "interceptor.mp4",
+            "walk_cycle_proper.mp4",
+            "altar.mp4",
+            "sledger-full.mp4",
+            "first_person_animations.mp4",
+        ],
+        "Concept Art": [
+            "Fighter_concepts.png",
+            "Cleric_Concept.png",
+            "Fighter_Slash_Concept.png"
+        ],
+        "Games": [
+            "perihelion.mp4",
+            "celestial_combat.mp4"
+        ],
+        "Pixel Art": [
+            "Bamf.gif",
+            "cursed_paladin_death.gif",
+            "devil.gif",
+            "Walking biped.gif",
+            "Ghoul.gif",
+            "Reload.gif"
+        ],
+    }
+    const projects = files[section].map(file => ({
+        file: file,
+        title: file.replace(/\.(jpg|jpeg|png|gif|mp4|webm)$/, '').replace(/-|_/g, ' ').replace(/\b\w/g, char => char.toUpperCase())
+    }));
+    
+    return <div className="projectCollection">
+        {projects.map((project, index) => (
+            <div key={index} className={proj ? proj : "project"}>
+                <h3>{project.title}</h3>
+                {project.file.endsWith('.mp4') || project.file.endsWith('.webm') ? (
+                    <video src={filepath + project.file} controls autoPlay loop muted />
+                ) : (
+                    <img src={filepath + project.file} alt={project.title} />
+                )}
+            </div>
         ))}
     </div>;
 }
@@ -239,7 +287,7 @@ function AboutButton({image, className, onClick, page, id}) {
                 </g>
                 <mask 
                     id="e5EjUZ76vzl6" 
-                    maskType="luminance" 
+                    masktype="luminance" 
                     x="-150%" 
                     y="-150%" 
                     height="400%" 
