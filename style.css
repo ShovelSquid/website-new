@@ -235,7 +235,7 @@ body {
 .project:hover img, .project:hover video {
     transform: scale(0.9);
     transform: translateY(-10%);
-    object-fit: contain;
+    /* object-fit: contain; */
     transition: all 0.9s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
@@ -251,6 +251,21 @@ body {
 .project:hover h3 {
     color: red;
 }
+
+#aboutContent {
+    position: flex;
+    inset: 0;
+    font-weight: 300;
+    font-size: 1.1em;
+    width: 50%;
+    margin: calc(40px + 20vh) 25vw 0;
+    text-align: left;
+    
+    /* Smooth transitions for subtitle */
+    transition: all 0.6s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+/* Back Button */
 
 @keyframes ePhODi7nsvp3__m {
     0% {
@@ -453,13 +468,12 @@ body {
 }
 
 #buttonContainer {
-    position: flex;
-    margin: auto;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, calc(-50% + 25vh));
     width: 80%;
-}
-
-#buttons {
-    /* background-color: tomato; */
+    transition: all 0.6s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
 .main #back {
@@ -560,14 +574,18 @@ svg {
 }
 
 .main.projects #buttonContainer,
-.main.about #buttonContainer {
-    position: sticky;
+.main.about #buttonContainer,
+.main.contact #buttonContainer{
+    position: fixed;
     width: 50px;
     /* height: 500px; */
     left: 30px;
-    float: left;
-    transform: translateX(-50%);
-    bottom: 35%;
+    float: left center;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: all 0.6s cubic-bezier(0.075, 0.82, 0.165, 1);
+    /* transform: translateX(-50%); */
+    /* bottom: 35%; */
     /* background-color: #6b2323a1; */
     /* z-index: -10; */
     /* margin: auto; */
@@ -975,4 +993,79 @@ button:hover .icon-blog svg {
     /* This allows both SVG internal animations AND CSS animations to work together */
     transform-origin: center center;
     transition: all 0.3s ease;
+}
+
+/* Lightbox styles */
+.lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    cursor: pointer;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.lightbox-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: default;
+}
+
+.lightbox-content img,
+.lightbox-content video {
+    max-width: 100%;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+}
+
+.lightbox-close {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 40px;
+    font-weight: 300;
+    cursor: pointer;
+    padding: 10px;
+    line-height: 1;
+    transition: transform 0.2s ease;
+}
+
+.lightbox-close:hover {
+    transform: scale(1.2);
+}
+
+/* Make project items clickable */
+.project img,
+.project video {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.project img:hover,
+.project video:hover {
+    /* opacity: 0.8; */
+    transform: scale(1.02);
 }

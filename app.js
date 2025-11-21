@@ -1,9 +1,49 @@
 const domNode = document.getElementById('app');
 const root = ReactDOM.createRoot(domNode);
 
+// Lightbox component for viewing media in full size
+function Lightbox({src, type, onClose}) {
+    // Close on escape key
+    React.useEffect(() => {
+        const handleEscape = (e) => {
+            if (e.key === 'Escape') onClose();
+        };
+        window.addEventListener('keydown', handleEscape);
+        return () => window.removeEventListener('keydown', handleEscape);
+    }, [onClose]);
+
+    if (!src) return null;
+
+    return (
+        <div className="lightbox" onClick={onClose}>
+            <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
+                {type === 'video' ? (
+                    <video src={src} controls autoPlay loop />
+                ) : (
+                    <img src={src} alt="Full size" />
+                )}
+                <button className="lightbox-close" onClick={onClose}>×</button>
+            </div>
+        </div>
+    );
+}
+
 function Projects({section, onSelect}) {
-    const sections = ["3D Animation", "Concept Art", "Games", "Pixel Art",
+    const sections = ["3D Animation", "Concept Art", "Games", "Pixel Art", "Western",
     ];
+    const [isPending, startTransition] = React.useTransition();
+    const [showContent, setShowContent] = React.useState(false);
+
+    // Load content as low-priority update
+    React.useEffect(() => {
+        // Wait for next frame so CSS animations can start
+        requestAnimationFrame(() => {
+            // Mark this state update as non-urgent
+            startTransition(() => {
+                setShowContent(true);
+            });
+        });
+    }, []);
 
     // function onSelect(section) {
     //     setSection(section);
@@ -13,15 +53,16 @@ function Projects({section, onSelect}) {
         {sections.map((section) => (
             <Interactitle key={section} title={section} onClick={() => onSelect(section)} />
         ))}
-        <ProjectCollection section={section} />
+        {showContent && <ProjectCollection section={section} />}
     </div>;
 }
 
 function ProjectCollection({section}) {
     const filepath = "assets/portfolio/" + section + "/";
-    // const imageFiles = [".png", ".jpg", ".jpeg", ".gif"];
-    // const videoFiles = [".mp4", ".webm", ".ogg"];
     const [proj, setProj] = React.useState(null);
+    const [visibleCount, setVisibleCount] = React.useState(0);
+    const [lightbox, setLightbox] = React.useState({ src: null, type: null });
+    
     const files = {
         "3D Animation": [
             "interceptor.mp4",
@@ -32,8 +73,11 @@ function ProjectCollection({section}) {
         ],
         "Concept Art": [
             "Fighter_concepts.png",
-            "Cleric_Concept.png",
-            "Fighter_Slash_Concept.png"
+            "Fighter_Slash_Concept.png",
+            "bimbus concept.png",
+            "ruined_knights.png",
+            "Shepherd.png",
+            "Soldier_Concept.png"
         ],
         "Games": [
             "perihelion.mp4",
@@ -47,24 +91,85 @@ function ProjectCollection({section}) {
             "Ghoul.gif",
             "Reload.gif"
         ],
+        "Western": [
+          "Boomer.gif",
+          "dingus.gif",
+          "evolution.gif",
+          "Farm_enemy.gif",
+          "Thorg.gif",
+          "Thunkalunkadunkus.gif"
+        ]
     }
     const projects = files[section].map(file => ({
         file: file,
         title: file.replace(/\.(jpg|jpeg|png|gif|mp4|webm)$/, '').replace(/-|_/g, ' ').replace(/\b\w/g, char => char.toUpperCase())
     }));
     
-    return <div className="projectCollection">
-        {projects.map((project, index) => (
-            <div key={index} className={proj ? proj : "project"}>
-                <h3>{project.title}</h3>
-                {project.file.endsWith('.mp4') || project.file.endsWith('.webm') ? (
-                    <video src={filepath + project.file} controls autoPlay loop muted />
-                ) : (
-                    <img src={filepath + project.file} alt={project.title} />
-                )}
+    // Progressive rendering - add items gradually
+    React.useEffect(() => {
+        setVisibleCount(0);
+        const incrementVisible = () => {
+            setVisibleCount(prev => {
+                if (prev < projects.length) {
+                    requestAnimationFrame(incrementVisible);
+                    return prev + 1;
+                }
+                return prev;
+            });
+        };
+        requestAnimationFrame(incrementVisible);
+    }, [section, projects.length]);
+    
+    const openLightbox = (src, type) => {
+        setLightbox({ src, type });
+    };
+
+    const closeLightbox = () => {
+        setLightbox({ src: null, type: null });
+    };
+    
+    return (
+        <>
+            <Lightbox src={lightbox.src} type={lightbox.type} onClose={closeLightbox} />
+            <div className="projectCollection">
+                {projects.slice(0, visibleCount).map((project, index) => (
+                    <div key={index} className={proj ? proj : "project"}>
+                        <h3>{project.title}</h3>
+                        {project.file.endsWith('.mp4') || project.file.endsWith('.webm') ? (
+                            <video 
+                                src={filepath + project.file} 
+                                onClick={() => openLightbox(filepath + project.file, 'video')}
+                                controls 
+                                loop 
+                                muted 
+                                autoPlay
+                                preload="metadata"
+                                style={{cursor: 'pointer'}}
+                            />
+                        ) : (
+                            <img 
+                                src={filepath + project.file} 
+                                alt={project.title} 
+                                loading="lazy"
+                                onClick={() => openLightbox(filepath + project.file, 'image')}
+                                style={{cursor: 'pointer'}}
+                            />
+                        )}
+                    </div>
+                ))}
             </div>
-        ))}
-    </div>;
+        </>
+    );
+}
+
+function About() {
+  return <div id="aboutContent">
+    <p>Hello! I'm Kaelen Cook, an artist and developer with a passion for creating immersive experiences through 3D animation, concept art, and game development. With a background in both art and technology, I strive to blend creativity with technical skills to bring ideas to life.</p>
+    <p>My journey began with a fascination for storytelling and visual arts, which led me to explore various mediums and techniques. Over the years, I've honed my skills in 3D modeling, animation, and digital painting, allowing me to create compelling characters and environments.</p>
+    <p>In addition to my artistic pursuits, I have a strong interest in game development. I enjoy designing interactive experiences that engage players and challenge their perceptions. Whether it's through intricate gameplay mechanics or captivating narratives, I aim to create games that leave a lasting impact.</p>
+    <p>When I'm not immersed in my work, I enjoy exploring new technologies, collaborating with fellow creatives, and staying up-to-date with industry trends. I'm always eager to learn and grow, pushing the boundaries of what's possible in the world of art and development.</p>
+    <p>Thank you for visiting my portfolio! Feel free to explore my projects and reach out if you'd like to connect or collaborate.</p>
+  </div>
 }
 
 function Header() {
@@ -121,7 +226,7 @@ function Header() {
         <Title title={mainTitle} id="main" />
         <Title title={state ? state.charAt(0).toUpperCase() + state.slice(1) : subTitle} id="sub"/>
         {state !== null && <BackButton id="back" onClick={back} page={'BackIcon'}/>}
-        {/* {state === "about" && <Title title="About Me" />} */}
+        {state === "about" && <About />}
         {state === "projects" && <Projects section={section} onSelect={selectSection}/>}
         {/* {state === "contact" && <Title title="Contact Me" />} */}
         {/* {state === "links" && <Title title="Links" />} */}
