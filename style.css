@@ -256,6 +256,15 @@ body {
     }
 }
 
+#aboutContent img { 
+    float: right;
+    width: 300px;
+    height: auto;
+    border-radius: 8px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
 /* Back Button */
 
 @keyframes ePhODi7nsvp3__m {

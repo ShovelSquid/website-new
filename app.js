@@ -65,62 +65,66 @@ function ProjectCollection({section}) {
     
     const files = {
         "3D Animation": [
-            "interceptor.mp4",
-            "walk_cycle_proper.mp4",
-            "altar.mp4",
-            "sledger-full.mp4",
-            "first_person_animations.mp4",
-            "devil.gif"
+            { file: "interceptor.mp4" },
+            { file: "walk_cycle_proper.mp4" },
+            { file: "altar.mp4" },
+            { file: "sledger-full.mp4" },
+            { file: "first_person_animations.mp4" },
+            { file: "devil.gif" }
         ],
         "2D Animation": [
-          "groblin.gif",
-          "Human_Torch_Wout_Fire_Resistance.gif",
-          "movement.gif",
-          "Triangle_Shatter.gif",
-          "father_figure.mp4",
-          "handcules.mp4",
-          "Man.mp4",
-          "mcdoodin.mp4",
+            { file: "groblin.gif" },
+            { file: "Human_Torch_Wout_Fire_Resistance.gif" },
+            { file: "movement.gif" },
+            { file: "Triangle_Shatter.gif" },
+            { file: "father_figure.mp4" },
+            { file: "handcules.mp4" },
+            { file: "Man.mp4" },
+            { file: "mcdoodin.mp4" }
         ],
         "Concept Art": [
-            "Fighter_concepts.png",
-            "Glassics.png",
-            "Fighter_Slash_Concept.png",
-            "bimbus concept.png",
-            "ruined_knights.png",
-            "Soldier_Concept.png"
+            { file: "Fighter_concepts.png" },
+            { file: "Glassics.png" },
+            { file: "Fighter_Slash_Concept.png" },
+            { file: "bimbus concept.png" },
+            { file: "ruined_knights.png" },
+            { file: "Soldier_Concept.png" }
         ],
         "Illustration": [
-            "Glasshead.png",
-            "Murder.png",
-            "Cyborg Hand.png",
-            "string.jpeg",
-            "Shepherd.png",
+            { file: "Glasshead.png" },
+            { file: "Murder.png" },
+            { file: "Cyborg Hand.png" },
+            { file: "string.jpeg" },
+            { file: "Shepherd.png" }
         ],
         "Games": [
-            "perihelion.mp4",
-            "celestial_combat.mp4"
+            { file: "perihelion.mp4", link: "https://shovelsquid.itch.io/perihelion" },
+            { file: "celestial_combat.mp4", link: "https://shovelsquid.itch.io/celestialcombat" }
         ],
         "Pixel Art": [
-            "Bamf.gif",
-            "cursed_paladin_death.gif",
-            "ship.gif",
-            "Walking biped.gif",
-            "Ghoul.gif",
-            "Reload.gif"
+            { file: "Bamf.gif" },
+            { file: "cursed_paladin_death.gif" },
+            { file: "ship.gif" },
+            { file: "Walking biped.gif" },
+            { file: "Ghoul.gif" },
+            { file: "Reload.gif" }
         ],
         "Weird Western": [
-          "Boomer.gif",
-          "dingus.gif",
-          "evolution.gif",
-          "Farm_enemy.gif",
-          "Thorg.gif",
-          "Thunkalunkadunkus.gif"
+            { file: "Boomer.gif" },
+            { file: "dingus.gif" },
+            { file: "evolution.gif" },
+            { file: "Farm_enemy.gif" },
+            { file: "Thorg.gif" },
+            { file: "Thunkalunkadunkus.gif" }
         ]
     }
-    const projects = files[section].map(file => ({
-        file: file,
-        title: file.replace(/\.(jpg|jpeg|png|gif|mp4|webm)$/, '').replace(/-|_/g, ' ').replace(/\b\w/g, char => char.toUpperCase())
+    const projects = files[section].map(item => ({
+        file: typeof item === 'string' ? item : item.file,
+        link: typeof item === 'object' ? item.link : null,
+        title: (typeof item === 'string' ? item : item.file)
+            .replace(/\.(jpg|jpeg|png|gif|mp4|webm)$/, '')
+            .replace(/-|_/g, ' ')
+            .replace(/\b\w/g, char => char.toUpperCase())
     }));
     
     // Progressive rendering - add items gradually
@@ -153,25 +157,46 @@ function ProjectCollection({section}) {
                 {projects.slice(0, visibleCount).map((project, index) => (
                     <div key={index} className={proj ? proj : "project"}>
                         <h3>{project.title}</h3>
-                        {project.file.endsWith('.mp4') || project.file.endsWith('.webm') ? (
-                            <video 
-                                src={filepath + project.file} 
-                                onClick={() => openLightbox(filepath + project.file, 'video')}
-                                controls 
-                                loop 
-                                muted 
-                                autoPlay
-                                preload="metadata"
-                                style={{cursor: 'pointer'}}
-                            />
+                        {project.link ? (
+                            <a href={project.link} target="_blank" rel="noopener noreferrer">
+                                {project.file.endsWith('.mp4') || project.file.endsWith('.webm') ? (
+                                    <video 
+                                        src={filepath + project.file} 
+                                        controls 
+                                        loop 
+                                        muted 
+                                        autoPlay
+                                        preload="metadata"
+                                    />
+                                ) : (
+                                    <img 
+                                        src={filepath + project.file} 
+                                        alt={project.title} 
+                                        loading="lazy"
+                                    />
+                                )}
+                            </a>
                         ) : (
-                            <img 
-                                src={filepath + project.file} 
-                                alt={project.title} 
-                                loading="lazy"
-                                onClick={() => openLightbox(filepath + project.file, 'image')}
-                                style={{cursor: 'pointer'}}
-                            />
+                            project.file.endsWith('.mp4') || project.file.endsWith('.webm') ? (
+                                <video 
+                                    src={filepath + project.file} 
+                                    onClick={() => openLightbox(filepath + project.file, 'video')}
+                                    controls 
+                                    loop 
+                                    muted 
+                                    autoPlay
+                                    preload="metadata"
+                                    style={{cursor: 'pointer'}}
+                                />
+                            ) : (
+                                <img 
+                                    src={filepath + project.file} 
+                                    alt={project.title} 
+                                    loading="lazy"
+                                    onClick={() => openLightbox(filepath + project.file, 'image')}
+                                    style={{cursor: 'pointer'}}
+                                />
+                            )
                         )}
                     </div>
                 ))}
@@ -183,7 +208,7 @@ function ProjectCollection({section}) {
 function About() {
   return <div id="aboutContent">
     <p>Hello! I'm Kaelen Cook, an artist and developer with a passion for creating immersive experiences through 3D animation, concept art, and game development. With a background in both art and technology, I strive to blend creativity with technical skills to bring ideas to life.</p>
-    <img></img>
+    <img src="assets/images/me.jpg"></img>
     <p>My journey began with a fascination for storytelling and visual arts, which led me to explore various mediums and techniques. Over the years, I've honed my skills in 3D modeling, animation, and digital painting, allowing me to create compelling characters and environments.</p>
     <p>In addition to my artistic pursuits, I have a strong interest in game development. I enjoy designing interactive experiences that engage players and challenge their perceptions. Whether it's through intricate gameplay mechanics or captivating narratives, I aim to create games that leave a lasting impact.</p>
     <p>When I'm not immersed in my work, I enjoy exploring new technologies, collaborating with fellow creatives, and staying up-to-date with industry trends. I'm always eager to learn and grow, pushing the boundaries of what's possible in the world of art and development.</p>
