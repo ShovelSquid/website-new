@@ -190,6 +190,15 @@ function About() {
   </div>
 }
 
+function Contact() {
+  return <div id="contactButtons">
+    <div id="buttons">
+      <ContactButton id="contact"/>
+      <ContactButton id="contact"/>
+      <ContactButton id="contact"/>
+  </div></div>
+}
+
 function Header() {
 
     const pages = ["About", "Projects", "Contact"];
@@ -246,7 +255,7 @@ function Header() {
         {state !== null && <BackButton id="back" onClick={back} page={'BackIcon'}/>}
         {state === "about" && <About />}
         {state === "projects" && <Projects section={section} onSelect={selectSection}/>}
-        {/* {state === "contact" && <Title title="Contact Me" />} */}
+        {state === "contact" && <Contact />}
         {/* {state === "links" && <Title title="Links" />} */}
         {/* {state === "blog" && <Title title="Blog" />} */}
         <div id="buttonContainer">
