@@ -227,12 +227,13 @@ function Contact() {
         </ul>
 
         </div>
-  <div id="contactButtons">
+  {/* <div id="contactButtons">
     <div id="buttons">
       <ContactButton id="contact"/>
       <ContactButton id="contact"/>
       <ContactButton id="contact"/>
-  </div></div></div>
+  </div></div> */}
+  </div>
 }
 
 function Header() {
