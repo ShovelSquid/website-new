@@ -29,7 +29,7 @@ function Lightbox({src, type, onClose}) {
 }
 
 function Projects({section, onSelect}) {
-    const sections = ["3D Animation", "Concept Art", "Games", "Pixel Art", "Western",
+    const sections = ["3D Animation", "2D Animation", "Concept Art", "Illustration", "Games", "Pixel Art", "Weird Western",
     ];
     const [isPending, startTransition] = React.useTransition();
     const [showContent, setShowContent] = React.useState(false);
@@ -70,14 +70,32 @@ function ProjectCollection({section}) {
             "altar.mp4",
             "sledger-full.mp4",
             "first_person_animations.mp4",
+            "devil.gif"
+        ],
+        "2D Animation": [
+          "groblin.gif",
+          "Human_Torch_Wout_Fire_Resistance.gif",
+          "movement.gif",
+          "Triangle_Shatter.gif",
+          "father_figure.mp4",
+          "handcules.mp4",
+          "Man.mp4",
+          "mcdoodin.mp4",
         ],
         "Concept Art": [
             "Fighter_concepts.png",
+            "Glassics.png",
             "Fighter_Slash_Concept.png",
             "bimbus concept.png",
             "ruined_knights.png",
-            "Shepherd.png",
             "Soldier_Concept.png"
+        ],
+        "Illustration": [
+            "Glasshead.png",
+            "Plunder.png",
+            "Cyborg Hand.png",
+            "string.jpeg",
+            "Shepherd.png",
         ],
         "Games": [
             "perihelion.mp4",
@@ -86,12 +104,12 @@ function ProjectCollection({section}) {
         "Pixel Art": [
             "Bamf.gif",
             "cursed_paladin_death.gif",
-            "devil.gif",
+            "ship.gif",
             "Walking biped.gif",
             "Ghoul.gif",
             "Reload.gif"
         ],
-        "Western": [
+        "Weird Western": [
           "Boomer.gif",
           "dingus.gif",
           "evolution.gif",
