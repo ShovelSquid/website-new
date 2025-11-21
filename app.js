@@ -92,7 +92,7 @@ function ProjectCollection({section}) {
         ],
         "Illustration": [
             "Glasshead.png",
-            "Plunder.png",
+            "Murder.png",
             "Cyborg Hand.png",
             "string.jpeg",
             "Shepherd.png",
@@ -183,6 +183,7 @@ function ProjectCollection({section}) {
 function About() {
   return <div id="aboutContent">
     <p>Hello! I'm Kaelen Cook, an artist and developer with a passion for creating immersive experiences through 3D animation, concept art, and game development. With a background in both art and technology, I strive to blend creativity with technical skills to bring ideas to life.</p>
+    <img></img>
     <p>My journey began with a fascination for storytelling and visual arts, which led me to explore various mediums and techniques. Over the years, I've honed my skills in 3D modeling, animation, and digital painting, allowing me to create compelling characters and environments.</p>
     <p>In addition to my artistic pursuits, I have a strong interest in game development. I enjoy designing interactive experiences that engage players and challenge their perceptions. Whether it's through intricate gameplay mechanics or captivating narratives, I aim to create games that leave a lasting impact.</p>
     <p>When I'm not immersed in my work, I enjoy exploring new technologies, collaborating with fellow creatives, and staying up-to-date with industry trends. I'm always eager to learn and grow, pushing the boundaries of what's possible in the world of art and development.</p>
@@ -191,12 +192,22 @@ function About() {
 }
 
 function Contact() {
-  return <div id="contactButtons">
+  return <div id="contactContent">
+    <div id="aboutContent">
+        <p>If you'd like to get in touch, feel free to reach out through any of the following methods:</p>
+        <ul>
+            <li>Email: <a href="mailto:kaelenscook@shovelsquid.com">kaelenscook@shovelsquid.com</a></li>
+            <li>Discord: <a href="https://discord.com/">ShovelSquid</a></li>
+            <li>Phone: <a href="https://en.wikipedia.org/wiki/Telephone_number">+1(310)562-8805</a></li>
+        </ul>
+
+        </div>
+  <div id="contactButtons">
     <div id="buttons">
       <ContactButton id="contact"/>
       <ContactButton id="contact"/>
       <ContactButton id="contact"/>
-  </div></div>
+  </div></div></div>
 }
 
 function Header() {
