@@ -107,7 +107,7 @@ function ProjectCollection({section}) {
             { file: "ship.gif" },
             { file: "Walking biped.gif" },
             { file: "Ghoul.gif" },
-            { file: "Reload.gif" }
+            { file: "Reload.GIF" }
         ],
         "Weird Western": [
             { file: "Boomer.gif" },
