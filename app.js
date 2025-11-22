@@ -17,7 +17,17 @@ function Lightbox({src, type, onClose}) {
     return (
         <div className="lightbox" onClick={onClose}>
             <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
-                {type === 'video' ? (
+                {type === 'youtube' ? (
+                    <iframe
+                        width="80%"
+                        height="80%"
+                        src={`https://www.youtube.com/embed/${src}?autoplay=1`}
+                        title="YouTube video"
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                    />
+                ) : type === 'video' ? (
                     <video src={src} controls autoPlay loop />
                 ) : (
                     <img src={src} alt="Full size" />
@@ -29,7 +39,8 @@ function Lightbox({src, type, onClose}) {
 }
 
 function Projects({section, onSelect}) {
-    const sections = ["3D Animation", "2D Animation", "Concept Art", "Illustration", "Games", "Pixel Art", "Weird Western",
+    const sections = ["3D Animation", "2D Animation", "Concept Art", "Illustration", "Games", 
+        "Pixel Art", "Short Videos", "Worldbuilding"
     ];
     const [isPending, startTransition] = React.useTransition();
     const [showContent, setShowContent] = React.useState(false);
@@ -63,6 +74,18 @@ function ProjectCollection({section}) {
     const [visibleCount, setVisibleCount] = React.useState(0);
     const [lightbox, setLightbox] = React.useState({ src: null, type: null });
     
+    // Helper function to check if it's a YouTube URL
+    const isYouTube = (file) => {
+        return file && (file.includes('youtube.com') || file.includes('youtu.be'));
+    };
+
+    // Helper function to extract YouTube video ID
+    const getYouTubeId = (url) => {
+        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|shorts\/|&v=)([^#&?]*).*/;
+        const match = url.match(regExp);
+        return (match && match[2].length === 11) ? match[2] : null;
+    };
+    
     const files = {
         "3D Animation": [
             { file: "interceptor.mp4" },
@@ -79,6 +102,7 @@ function ProjectCollection({section}) {
             { file: "Triangle_Shatter.gif" },
             { file: "father_figure.mp4" },
             { file: "handcules.mp4" },
+            { file: "rat.mp4" },
             { file: "Man.mp4" },
             { file: "mcdoodin.mp4" }
         ],
@@ -109,23 +133,41 @@ function ProjectCollection({section}) {
             { file: "Ghoul.gif" },
             { file: "Reload.GIF" }
         ],
-        "Weird Western": [
-            { file: "Boomer.gif" },
-            { file: "dingus.gif" },
-            { file: "evolution.gif" },
-            { file: "Farm_enemy.gif" },
-            { file: "Thorg.gif" },
-            { file: "Thunkalunkadunkus.gif" }
+        "Short Videos": [
+            { file: "lightlinks.mp4"},
+            { file: "https://www.youtube.com/shorts/ugHOE0BNYXA", title: "Late Night TV"},
+            { file: "https://www.youtube.com/watch?v=PnTSK45W95U", title: "Fight Scene"},
+        ],
+        "Worldbuilding": [
+            { file: "Arcane World Notes.jpg" },
+            { file: "Arcane World Notes 2.jpg" },
         ]
     }
-    const projects = files[section].map(item => ({
-        file: typeof item === 'string' ? item : item.file,
-        link: typeof item === 'object' ? item.link : null,
-        title: (typeof item === 'string' ? item : item.file)
-            .replace(/\.(jpg|jpeg|png|gif|mp4|webm)$/, '')
-            .replace(/-|_/g, ' ')
-            .replace(/\b\w/g, char => char.toUpperCase())
-    }));
+    const projects = files[section].map(item => {
+        const fileValue = typeof item === 'string' ? item : item.file;
+        const customTitle = typeof item === 'object' && item.title ? item.title : null;
+        
+        // Generate title, avoiding processing YouTube URLs
+        let generatedTitle;
+        if (customTitle) {
+            generatedTitle = customTitle;
+        } else if (isYouTube(fileValue)) {
+            // For YouTube, use the video ID as title
+            generatedTitle = getYouTubeId(fileValue) || 'YouTube Video';
+        } else {
+            // Normal file processing
+            generatedTitle = fileValue
+                .replace(/\.(jpg|jpeg|png|gif|mp4|webm)$/, '')
+                .replace(/-|_/g, ' ')
+                .replace(/\b\w/g, char => char.toUpperCase());
+        }
+        
+        return {
+            file: fileValue,
+            link: typeof item === 'object' ? item.link : null,
+            title: generatedTitle
+        };
+    });
     
     // Progressive rendering - add items gradually
     React.useEffect(() => {
@@ -154,57 +196,77 @@ function ProjectCollection({section}) {
         <>
             <Lightbox src={lightbox.src} type={lightbox.type} onClose={closeLightbox} />
             <div className="projectCollection">
-                {projects.slice(0, visibleCount).map((project, index) => (
-                    <div key={index} className={proj ? proj : "project"}>
-                        <h3>{project.title}</h3>
-                        {project.link ? (
-                            <a href={project.link} target="_blank" rel="noopener noreferrer">
-                                {project.file.endsWith('.mp4') || project.file.endsWith('.webm') ? (
+                {projects.slice(0, visibleCount).map((project, index) => {
+                    const youtubeId = isYouTube(project.file) ? getYouTubeId(project.file) : null;
+                    
+                    return (
+                        <div key={index} className={proj ? proj : "project"}>
+                            <h3>{project.title}</h3>
+                            {youtubeId ? (
+                                <div 
+                                    onClick={() => openLightbox(youtubeId, 'youtube')}
+                                    style={{cursor: 'pointer', width: '100%', height: '100%'}}
+                                >
+                                    <iframe
+                                        width="100%"
+                                        height="100%"
+                                        src={`https://www.youtube.com/embed/${youtubeId}`}
+                                        title={project.title}
+                                        frameBorder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        allowFullScreen
+                                        style={{pointerEvents: 'none'}}
+                                    />
+                                </div>
+                            ) : project.link ? (
+                                <a href={project.link} target="_blank" rel="noopener noreferrer">
+                                    {project.file.endsWith('.mp4') || project.file.endsWith('.webm') ? (
+                                        <video 
+                                            src={filepath + project.file} 
+                                            controls 
+                                            loop 
+                                            muted 
+                                            autoPlay
+                                            preload="metadata"
+                                        />
+                                    ) : (
+                                        <img 
+                                            src={filepath + project.file} 
+                                            alt={project.title} 
+                                            loading="lazy"
+                                        />
+                                    )}
+                                </a>
+                            ) : (
+                                project.file.endsWith('.mp4') || project.file.endsWith('.webm') ? (
                                     <video 
                                         src={filepath + project.file} 
-                                        controls 
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            openLightbox(filepath + project.file, 'video');
+                                        }}
                                         loop 
-                                        muted 
+                                         
                                         autoPlay
                                         preload="metadata"
+                                        style={{cursor: 'pointer'}}
                                     />
                                 ) : (
                                     <img 
                                         src={filepath + project.file} 
                                         alt={project.title} 
                                         loading="lazy"
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            openLightbox(filepath + project.file, 'image');
+                                        }}
+                                        style={{cursor: 'pointer'}}
                                     />
-                                )}
-                            </a>
-                        ) : (
-                            project.file.endsWith('.mp4') || project.file.endsWith('.webm') ? (
-                                <video 
-                                    src={filepath + project.file} 
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        openLightbox(filepath + project.file, 'video');
-                                    }}
-                                    loop 
-                                    muted 
-                                    autoPlay
-                                    preload="metadata"
-                                    style={{cursor: 'pointer'}}
-                                />
-                            ) : (
-                                <img 
-                                    src={filepath + project.file} 
-                                    alt={project.title} 
-                                    loading="lazy"
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        openLightbox(filepath + project.file, 'image');
-                                    }}
-                                    style={{cursor: 'pointer'}}
-                                />
-                            )
-                        )}
-                    </div>
-                ))}
+                                )
+                            )}
+                        </div>
+                    );
+                })}
             </div>
         </>
     );
@@ -218,6 +280,7 @@ function About() {
     <p>In addition to my artistic pursuits, I have a strong interest in game development. I enjoy designing interactive experiences that engage players and challenge their perceptions. Whether it's through intricate gameplay mechanics or captivating narratives, I aim to create games that leave a lasting impact.</p>
     <p>When I'm not immersed in my work, I enjoy exploring new technologies, collaborating with fellow creatives, and staying up-to-date with industry trends. I'm always eager to learn and grow, pushing the boundaries of what's possible in the world of art and development.</p>
     <p>Thank you for visiting my portfolio! Feel free to explore my projects and reach out if you'd like to connect or collaborate.</p>
+    <p><a href="assets/Kaelen Cook Resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a></p>
   </div>
 }
 
