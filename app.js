@@ -180,8 +180,10 @@ function ProjectCollection({section}) {
                             project.file.endsWith('.mp4') || project.file.endsWith('.webm') ? (
                                 <video 
                                     src={filepath + project.file} 
-                                    onClick={() => openLightbox(filepath + project.file, 'video')}
-                                    controls 
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        openLightbox(filepath + project.file, 'video');
+                                    }}
                                     loop 
                                     muted 
                                     autoPlay
@@ -193,7 +195,10 @@ function ProjectCollection({section}) {
                                     src={filepath + project.file} 
                                     alt={project.title} 
                                     loading="lazy"
-                                    onClick={() => openLightbox(filepath + project.file, 'image')}
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        openLightbox(filepath + project.file, 'image');
+                                    }}
                                     style={{cursor: 'pointer'}}
                                 />
                             )
