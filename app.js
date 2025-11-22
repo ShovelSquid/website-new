@@ -226,7 +226,11 @@ function Contact() {
     <div id="aboutContent">
         <p>If you'd like to get in touch, feel free to reach out through any of the following methods:</p>
         <ul>
-            <li>Email: <a href="mailto:kaelenscook@shovelsquid.com">kaelenscook@shovelsquid.com</a></li>
+            <li>Email:</li>
+                <ul>
+                <li><a href="mailto:kaelenscook@shovelsquid.com">kaelenscook@shovelsquid.com</a></li>
+                <li><a href="mailto:kaelen1cook@gmail.com">kaelen1cook@gmail.com</a></li>
+                </ul>
             <li>Discord: <a href="https://discord.com/">ShovelSquid</a></li>
             <li>Phone: <a href="https://en.wikipedia.org/wiki/Telephone_number">+1(310)562-8805</a></li>
         </ul>
