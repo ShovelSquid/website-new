@@ -80,6 +80,7 @@ function ProjectCollection({section}) {
         "3D Animation": [
             { file: "interceptor.mp4" },
             { file: "robot_walk_cycle.mp4" },
+            { file: "hunsk.mp4" },
             // { file: "MicroTurret.mp4" },
             // { file: "altar.mp4" },
             // { file: "sledger-full.mp4" },
