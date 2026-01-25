@@ -29,7 +29,7 @@ function Lightbox({src, type, onClose}) {
 }
 
 function Projects({section, onSelect}) {
-    const sections = ["3D Animation", "2D Animation", "Concept Art", "Illustration", "Games", "Pixel Art", "Weird Western",
+    const sections = ["2D Animation", "3D Animation", "3D Models", "Concept Art", "Spritesheets", "Games", "Pixel Art",
     ];
     const [isPending, startTransition] = React.useTransition();
     const [showContent, setShowContent] = React.useState(false);
@@ -64,31 +64,68 @@ function ProjectCollection({section}) {
     const [lightbox, setLightbox] = React.useState({ src: null, type: null });
     
     const files = {
+        "2D Animation": [
+            { file: "meg_ryan.mp4" },
+            { file: "grude.mp4" },
+            { file: "groblin.gif" },
+            // { file: "Human_Torch_Wout_Fire_Resistance.gif" },
+            // { file: "movement.gif" },
+            // { file: "Triangle_Shatter.gif" },
+            // { file: "father_figure.mp4" },
+            { file: "punch.gif"},
+            // { file: "handcules.mp4" },
+            // { file: "Man.mp4" },
+            // { file: "mcdoodin.mp4" }
+        ],
         "3D Animation": [
             { file: "interceptor.mp4" },
-            { file: "walk_cycle_proper.mp4" },
-            { file: "altar.mp4" },
-            { file: "sledger-full.mp4" },
+            { file: "robot_walk_cycle.mp4" },
+            // { file: "MicroTurret.mp4" },
+            // { file: "altar.mp4" },
+            // { file: "sledger-full.mp4" },
             { file: "first_person_animations.mp4" },
-            { file: "devil.gif" }
+            { file: "Mikey.mp4" },
+            // { file: "devil.gif" }
         ],
-        "2D Animation": [
-            { file: "groblin.gif" },
-            { file: "Human_Torch_Wout_Fire_Resistance.gif" },
-            { file: "movement.gif" },
-            { file: "Triangle_Shatter.gif" },
-            { file: "father_figure.mp4" },
-            { file: "handcules.mp4" },
-            { file: "Man.mp4" },
-            { file: "mcdoodin.mp4" }
+        "3D Models": [
+            { file: "devil.gif" },
+            { file: "Leg Bots.png" },
+            { file: "MacroTurret.png" },
+            { file: "sledger-full.mp4" },
+            { file: "Mic Man.png" },
+            { file: "ruined_knights.png" },
+            { file: "walker.png" },
         ],
         "Concept Art": [
-            { file: "Fighter_concepts.png" },
+            { file: "Robot_Types.png" },
+            { file: "Robot_Types_Presentation.png" },
+            { file: "Robot_Silhouettes.png" },
+            // { file: "Helldivers Sketches.png" },
+            // { file: "Design Ideation.png" },
+            { file: "Trash-Pits.png" },
+            { file: "Antaur.png" },
+            // { file: "Fighter_concept.png" },
+            { file: "interceptor concept.png" },
             { file: "Glassics.png" },
-            { file: "Fighter_Slash_Concept.png" },
-            { file: "bimbus concept.png" },
-            { file: "ruined_knights.png" },
-            { file: "Soldier_Concept.png" }
+            { file: "Tall_boy.png" },
+            { file: "string.jpeg" },
+            { file: "Shepherd.png" },
+            { file: "Wizard Blasties.png" },
+            { file: "Murder.png" },
+            { file: "Rock_Angels.png" },
+            { file: "Glasshead.png" },
+            // { file: "Design Sketch.png"},
+            // { file: "Fighter_Slash_Concept.png" },
+            // { file: "bimbus concept.png" },
+            // { file: "ruined_knights.png" },
+            // { file: "Soldier_Concept.png" }
+        ],
+        "Spritesheets": [
+            { file: "boomer_sheet.png" },
+            { file: "beamup-Sheet.png" },
+            // { file: "flyer-expord-light-1.png" },
+            { file: "monkey-run-sheet.png" },
+            { file: "thorg_sheet.png" },
         ],
         "Illustration": [
             { file: "Glasshead.png" },
@@ -103,6 +140,8 @@ function ProjectCollection({section}) {
         ],
         "Pixel Art": [
             { file: "Bamf.gif" },
+            { file: "Crawler.gif" },
+            { file: "enor.gif" },
             { file: "cursed_paladin_death.gif" },
             { file: "ship.gif" },
             { file: "Walking biped.gif" },
@@ -209,17 +248,20 @@ function About() {
   return <div id="aboutContent">
     <p>Hello! I'm Kaelen Cook, an artist and developer with a passion for creating immersive experiences through 3D animation, concept art, and game development. With a background in both art and technology, I strive to blend creativity with technical skills to bring ideas to life.</p>
     <img src="assets/images/me.jpg"></img>
-    <p>My journey began with a fascination for storytelling and visual arts, which led me to explore various mediums and techniques. Over the years, I've honed my skills in 3D modeling, animation, and digital painting, allowing me to create compelling characters and environments.</p>
-    <p>In addition to my artistic pursuits, I have a strong interest in game development. I enjoy designing interactive experiences that engage players and challenge their perceptions. Whether it's through intricate gameplay mechanics or captivating narratives, I aim to create games that leave a lasting impact.</p>
-    <p>When I'm not immersed in my work, I enjoy exploring new technologies, collaborating with fellow creatives, and staying up-to-date with industry trends. I'm always eager to learn and grow, pushing the boundaries of what's possible in the world of art and development.</p>
-    <p>Thank you for visiting my portfolio! Feel free to explore my projects and reach out if you'd like to connect or collaborate.</p>
+    {/* <p>Ever since I can remember playing halo for the first time at the age of 4, I've been obsessed with game UIs, animations, and generally video games as a medium.</p> */}
+    <p>I am well versed in most aspects of game development, particularly on the art side. Everything from UI to VFX to character animation is right up my alley; I particularly however love focusing on juice, making the game feel truly alive and crunchy for the players.</p>
+    <p>I also am trained in the theatrical arts, much to my teachers' chagrin. I love working as a voice and mocap actor, as well as a writer, and generally an imaginer of fictional scenarios and people with real motives and personalities. Improv is a solid fundamental for me and playing strong characters helps transition characters from concepts on a page to living animated characters in engine.</p>
+    {/* <p>On top of that, I also studied computer science in my schooling, so I have a strong background not only in programming for game engines but also in math, calculus, and natural sciences. I am a curious person by nature, and am constantly looking to see how we can evolve video games as a medium to further reflect the natural world in a more detailed way.</p> */}
+    {/* <p>In addition to my artistic pursuits, I have a strong interest in game development. I enjoy designing interactive experiences that engage players and challenge their perceptions. Whether it's through intricate gameplay mechanics or captivating narratives, I aim to create games that leave a lasting impact.</p> */}
+    <p>When I'm not immersed in my work, you can find me reading esoteric research papers about biofuels made out of algae at 3am, pretending to be doctor octopus on all fours in my room, feeling utterly despondent at the state of the world, or cooking a delicious meal!</p>
+    <p>Thank you for visiting my portfolio! Feel free to explore my projects and reach out if you'd like to connect or collaborate. Toodles!</p>
   </div>
 }
 
 function Contact() {
   return <div id="contactContent">
     <div id="aboutContent">
-        <p>If you'd like to get in touch, feel free to reach out through any of the following methods:</p>
+        <p>You can reach me through any of the following methods:</p>
         <ul>
             <li>Email: <a href="mailto:kaelenscook@shovelsquid.com">kaelenscook@shovelsquid.com</a></li>
             <li>Discord: <a href="https://discord.com/">ShovelSquid</a></li>
@@ -240,7 +282,7 @@ function Header() {
 
     const pages = ["About", "Projects", "Contact"];
     const [state, setState] = React.useState(null);
-    const [section, setSection] = React.useState("3D Animation");
+    const [section, setSection] = React.useState("2D Animation");
     let content = null;
     let mainTitle = "Kaelen Cook";
     let subTitle = "Artist & Developer";
@@ -287,7 +329,8 @@ function Header() {
     if (state === "links") mainTitle = "Links";
     if (state === "blog") mainTitle = "Blog";
     return <div className={`main ${state || ''}`}>
-        <Gallery></Gallery>
+        <PullDrawer onNavigate={handleClick} onHome={back} />
+        {state === null && <Gallery></Gallery>}
         <Title title={mainTitle} id="main" />
         {/* <Title title={state ? state.charAt(0).toUpperCase() + state.slice(1) : subTitle} id="sub"/> */}
         {state !== null && <BackButton id="back" onClick={back} page={'BackIcon'}/>}
@@ -306,10 +349,33 @@ function Header() {
     </div>
 }
 
+function PullDrawer({onNavigate, onHome}) {
+    const items = ["About", "Projects", "Contact"];
+    return (
+        <div className="pull-drawer" aria-hidden="false">
+            <div
+                className="pull-circle"
+                role="button"
+                tabIndex={0}
+                aria-label="Home"
+                onClick={() => onHome && onHome()}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') onHome && onHome(); }}
+            ></div>
+            <div className="pull-panel" role="menu" aria-label="Quick Links">
+                <ul>
+                    {items.map((it, i) => (
+                        <li key={i} role="menuitem" onClick={() => onNavigate && onNavigate(it)}>{it}</li>
+                    ))}
+                </ul>
+            </div>
+        </div>
+    );
+}
+
 function Gallery() {
     const galleryImages = [
         'assets/final/fish.gif',
-        'assets/final/interceptor.mp4',
+        'assets/final/MicroTurret.mp4',
         'assets/final/Robot_Hand.png',
         'assets/final/altar.mp4',
         'assets/final/wizard_animation_death.gif',
