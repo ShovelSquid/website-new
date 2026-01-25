@@ -287,25 +287,171 @@ function Header() {
     if (state === "links") mainTitle = "Links";
     if (state === "blog") mainTitle = "Blog";
     return <div className={`main ${state || ''}`}>
+        <Gallery></Gallery>
         <Title title={mainTitle} id="main" />
-        <Title title={state ? state.charAt(0).toUpperCase() + state.slice(1) : subTitle} id="sub"/>
+        {/* <Title title={state ? state.charAt(0).toUpperCase() + state.slice(1) : subTitle} id="sub"/> */}
         {state !== null && <BackButton id="back" onClick={back} page={'BackIcon'}/>}
         {state === "about" && <About />}
         {state === "projects" && <Projects section={section} onSelect={selectSection}/>}
         {state === "contact" && <Contact />}
         {/* {state === "links" && <Title title="Links" />} */}
         {/* {state === "blog" && <Title title="Blog" />} */}
-        <div id="buttonContainer">
+        {/* <div id="buttonContainer">
         <div id="buttons">
             <AboutButton id="about" onClick={() => handleClick("About")} page={'About'}/>
             <ProjectsButton id="projects" onClick={() => handleClick("Projects")} page={'Projects'}/>
             <ContactButton id="contact" onClick={() => handleClick("Contact")} page={'Contact'}/>
-            {/* {pages.map((page) => (
-                <Button key={page} page={page} id={page.toLowerCase()} className="nav" onClick={() => handleClick(page)} image={"assets/icons/"+page+".svg"} />
-            ))} */}
         </div>
-        </div>
+        </div> */}
     </div>
+}
+
+function Gallery() {
+    const galleryImages = [
+        'assets/final/fish.gif',
+        'assets/final/interceptor.mp4',
+        'assets/final/Robot_Hand.png',
+        'assets/final/altar.mp4',
+        'assets/final/wizard_animation_death.gif',
+        'assets/final/optionA.mp4'
+    ];
+    
+    const [currentIndex, setCurrentIndex] = React.useState(0);
+    const [isTransitioning, setIsTransitioning] = React.useState(false);
+    
+    const goToImage = (index) => {
+        if (isTransitioning) return;
+        setIsTransitioning(true);
+        setCurrentIndex(index);
+        setTimeout(() => setIsTransitioning(false), 300);
+    };
+    
+    const nextImage = () => {
+        const nextIndex = (currentIndex + 1) % galleryImages.length;
+        goToImage(nextIndex);
+    };
+    
+    const prevImage = () => {
+        const nextIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
+        goToImage(nextIndex);
+    };
+    
+    // Helper function to check if file is a video
+    const isVideo = (filename) => {
+        return filename.endsWith('.mp4') || filename.endsWith('.webm') || filename.endsWith('.mov');
+    };
+    
+    const currentMedia = galleryImages[currentIndex];
+    const isCurrentVideo = isVideo(currentMedia);
+    
+    // Keyboard navigation
+    React.useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (e.key === 'ArrowLeft') prevImage();
+            if (e.key === 'ArrowRight') nextImage();
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [currentIndex]);
+    
+    return (
+        <div id="gallery">
+            <button className="gallery-nav-button left" onClick={prevImage}>
+                <svg 
+                    className="icon icon-backicon"
+                    xmlns="http://www.w3.org/2000/svg" 
+                    viewBox="0 0 300 300" 
+                    width="50" 
+                    height="50"
+                >
+                    <path 
+                        id="gallery-left-1" 
+                        d="M103.118153,104.717394C88.396377,118.302176,54.045567,150,54.045567,150s135.825909,0,135.825909,0" 
+                        transform="translate(28.041479-.942019)" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        strokeWidth="4"
+                    />
+                    <path 
+                        id="gallery-left-2" 
+                        d="M103.118154,198.042939c0,0-36.35081-36.478021-51.072586-47.604792" 
+                        transform="translate(30.041478-1.380166)" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        strokeWidth="4"
+                    />
+                </svg>
+            </button>
+            
+            {isCurrentVideo ? (
+                <video 
+                    key={currentMedia}
+                    src={currentMedia}
+                    className={isTransitioning ? 'gallery-transition' : ''}
+                    controls
+                    autoPlay
+                    loop
+                    muted
+                />
+            ) : (
+                <img 
+                    src={currentMedia}
+                    className={isTransitioning ? 'gallery-transition' : ''}
+                />
+            )}
+            
+            <button className="gallery-nav-button right" onClick={nextImage}>
+                <svg 
+                    className="icon icon-backicon"
+                    xmlns="http://www.w3.org/2000/svg" 
+                    viewBox="0 0 300 300" 
+                    width="50" 
+                    height="50"
+                >
+                    <path 
+                        id="gallery-right-1" 
+                        d="M103.118153,104.717394C88.396377,118.302176,54.045567,150,54.045567,150s135.825909,0,135.825909,0" 
+                        transform="translate(28.041479-.942019) scale(-1, 1) translate(-300, 0)" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        strokeWidth="4"
+                    />
+                    <path 
+                        id="gallery-right-2" 
+                        d="M103.118154,198.042939c0,0-36.35081-36.478021-51.072586-47.604792" 
+                        transform="translate(30.041478-1.380166) scale(-1, 1) translate(-300, 0)" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        strokeWidth="4"
+                    />
+                </svg>
+            </button>
+            
+            <div className="gallery-thumbnails">
+                {galleryImages.map((img, index) => {
+                    const isVideoThumb = isVideo(img);
+                    return isVideoThumb ? (
+                        <video
+                            key={index}
+                            src={img}
+                            className={`gallery-thumbnail ${index === currentIndex ? 'active' : ''}`}
+                            onClick={() => goToImage(index)}
+                            muted
+                            loop
+                            autoPlay
+                        />
+                    ) : (
+                        <img
+                            key={index}
+                            src={img}
+                            className={`gallery-thumbnail ${index === currentIndex ? 'active' : ''}`}
+                            onClick={() => goToImage(index)}
+                        />
+                    );
+                })}
+            </div>
+        </div>
+    );
 }
 
 function BG() {
@@ -321,8 +467,8 @@ function Page() {
     }
 
     return <div>
-        <Header />
         <BG />
+        <Header />
         {/* <button onClick={handleClick}>Click {value}</button> */}
     </div>;
 }
