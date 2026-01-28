@@ -275,6 +275,11 @@ function Contact() {
         <ul>
             <li>Discord: <a href="https://discord.com/">ShovelSquid</a></li>
         </ul>
+        <p>Here are some of my other links:</p>
+        <ul>
+            <li><a href="https://sketchfab.com/shovelsquid/">Sketchfab</a></li>
+            <li><a href="https://itch.io/profile/shovelsquid/">Itch.io</a></li>
+        </ul>
 
         </div>
   {/* <div id="contactButtons">
