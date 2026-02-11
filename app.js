@@ -252,15 +252,9 @@ function ProjectCollection({section}) {
 
 function About() {
   return <div id="aboutContent">
-    <p>Hello! I'm Kaelen Cook, an artist and developer with a passion for creating immersive experiences through 3D animation, concept art, and game development. With a background in both art and technology, I strive to blend creativity with technical skills to bring ideas to life.</p>
-    <img src="assets/images/me.jpg"></img>
-    {/* <p>Ever since I can remember playing halo for the first time at the age of 4, I've been obsessed with game UIs, animations, and generally video games as a medium.</p> */}
-    <p>I am well versed in most aspects of game development, particularly on the art side. Everything from UI to VFX to character animation is right up my alley; I particularly however love focusing on juice, making the game feel truly alive and crunchy for the players.</p>
-    <p>I also am trained in the theatrical arts, much to my teachers' chagrin. I love working as a voice and mocap actor, as well as a writer, and generally an imaginer of fictional scenarios and people with real motives and personalities. Improv is a solid fundamental for me and playing strong characters helps transition characters from concepts on a page to living animated characters in engine.</p>
-    {/* <p>On top of that, I also studied computer science in my schooling, so I have a strong background not only in programming for game engines but also in math, calculus, and natural sciences. I am a curious person by nature, and am constantly looking to see how we can evolve video games as a medium to further reflect the natural world in a more detailed way.</p> */}
-    {/* <p>In addition to my artistic pursuits, I have a strong interest in game development. I enjoy designing interactive experiences that engage players and challenge their perceptions. Whether it's through intricate gameplay mechanics or captivating narratives, I aim to create games that leave a lasting impact.</p> */}
-    <p>When I'm not immersed in my work, you can find me reading esoteric research papers about biofuels made out of algae at 3am, pretending to be doctor octopus on all fours in my room, feeling utterly despondent at the state of the world, or cooking a delicious meal!</p>
-    <p>Thank you for visiting my portfolio! Feel free to explore my projects and reach out if you'd like to connect or collaborate. Toodles!</p>
+    <img src="assets/images/me.jpg" alt="Kaelen Cook"></img>
+    <p>Hello! I'm Kaelen, an artist/developer hybrid. I'm interested in making all kinds of games! I do ui, vfx, environments, characters, stories, and more. I love movies, comedy, and making games feel fun to play.</p>
+    <p>If you're interested in working together, please send me an email at <a href="mailto:kaelen1cook@gmail.com">kaelen1cook@gmail.com</a></p>
   </div>
 }
 
@@ -311,10 +305,10 @@ function Header() {
             window.location.href = "#projects";
             setState("projects");
         }
-        if (page == "Contact") {
-            window.location.href = "#contact";
-            setState("contact");
-        }
+        // if (page == "Contact") {
+        //     window.location.href = "#contact";
+        //     setState("contact");
+        // }
         if (page == "Links") {
             window.location.href = "#links";
             setState("links");
@@ -363,7 +357,7 @@ function Header() {
 }
 
 function PullDrawer({onNavigate, onHome}) {
-    const items = ["About", "Projects", "Contact"];
+    const items = ["About", "Projects"];
     return (
         <div className="pull-drawer" aria-hidden="false">
             <div
@@ -388,7 +382,8 @@ function PullDrawer({onNavigate, onHome}) {
 function Gallery() {
     const galleryImages = [
         'assets/final/fish.gif',
-        'assets/final/MicroTurret.mp4',
+        // 'assets/final/MicroTurret.mp4',
+        'assets/final/walk_render.mp4',
         'assets/final/Robot_Hand.png',
         'assets/final/altar.mp4',
         'assets/final/wizard_animation_death.gif',
