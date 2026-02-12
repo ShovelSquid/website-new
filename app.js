@@ -29,7 +29,7 @@ function Lightbox({src, type, onClose}) {
 }
 
 function Projects({section, onSelect}) {
-    const sections = ["2D Animation", "3D Animation", "3D Models", "Concept Art", "UI Icons", "Spritesheets", "Pixel Art",
+    const sections = ["2D Animation", "3D Animation", "3D Models", "Concept Art", "UI Icons", "Spritesheets", "Pixel Art", "Games"
     ];
     const [isPending, startTransition] = React.useTransition();
     const [showContent, setShowContent] = React.useState(false);
@@ -135,10 +135,10 @@ function ProjectCollection({section}) {
             { file: "string.jpeg" },
             { file: "Shepherd.png" }
         ],
-        "Games": [
-            { file: "perihelion.mp4", link: "https://shovelsquid.itch.io/perihelion" },
-            { file: "celestial_combat.mp4", link: "https://shovelsquid.itch.io/celestialcombat" }
-        ],
+        // "Games": [
+        //     { file: "perihelion.mp4", link: "https://shovelsquid.itch.io/perihelion" },
+        //     { file: "celestial_combat.mp4", link: "https://shovelsquid.itch.io/celestialcombat" }
+        // ],
         "UI Icons": [
             { file: "c4.png" },
             { file: "heart_hit_sheet.png" },
@@ -161,6 +161,12 @@ function ProjectCollection({section}) {
             { file: "Farm_enemy.gif" },
             { file: "Thorg.gif" },
             { file: "Thunkalunkadunkus.gif" }
+        ],
+        "Games": [
+            { file: "perihelion.mp4", link: "https://shovelsquid.itch.io/perihelion" },
+            { file: "celestial_combat.mp4", link: "https://shovelsquid.itch.io/celestialcombat" },
+            { file: "GameFoot.mp4" },
+            { file: "Gameplay Showcase.mp4", link: "https://store.steampowered.com/app/2968800/SLEDGE/" }
         ]
     }
     const projects = files[section].map(item => ({
