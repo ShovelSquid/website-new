@@ -384,7 +384,7 @@ function Gallery() {
         'assets/final/fish.gif',
         // 'assets/final/MicroTurret.mp4',
         'assets/final/walk_render.mp4',
-        'assets/final/Robot_Hand.png',
+        'assets/final/GameFoot.mp4',
         'assets/final/altar.mp4',
         'assets/final/wizard_animation_death.gif',
         'assets/final/Gameplay Showcase.mp4'
