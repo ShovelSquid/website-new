@@ -18,7 +18,7 @@ function Lightbox({src, type, onClose}) {
         <div className="lightbox" onClick={onClose}>
             <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
                 {type === 'video' ? (
-                    <video src={src} controls autoPlay loop />
+                    <video src={src} autoPlay loop />
                 ) : (
                     <img src={src} alt="Full size" />
                 )}
@@ -213,7 +213,6 @@ function ProjectCollection({section}) {
                                 {project.file.endsWith('.mp4') || project.file.endsWith('.webm') ? (
                                     <video 
                                         src={filepath + project.file} 
-                                        controls 
                                         loop 
                                         muted 
                                         autoPlay
@@ -232,7 +231,6 @@ function ProjectCollection({section}) {
                                 <video 
                                     src={filepath + project.file} 
                                     onClick={() => openLightbox(filepath + project.file, 'video')}
-                                    controls 
                                     loop 
                                     muted 
                                     autoPlay
@@ -390,11 +388,15 @@ function Gallery() {
         'assets/final/fish.gif',
         'assets/final/Deserted_Robot.mp4',
         // 'assets/final/walk_render.mp4',
-        'assets/final/GameFoot.mp4',
+        'assets/portfolio/Pixel Art/Walking biped.gif',
+        // 'assets/portfolio/Weird Western/dingus.gif',
+        'assets/portfolio/Concept Art/Shepherd.png',
+        'assets/portfolio/Pixel Art/bamf.gif',
+        'assets/final/GameDev.mp4',
         // 'assets/final/clear_render.mp4',
         'assets/final/altar.mp4',
         'assets/final/wizard_animation_death.gif',
-        'assets/final/Gameplay Showcase.mp4'
+        // 'assets/final/Gameplay Showcase.mp4'
         // 'assets/final/optionA.mp4'
     ];
     
@@ -470,7 +472,6 @@ function Gallery() {
                     key={currentMedia}
                     src={currentMedia}
                     className={isTransitioning ? 'gallery-transition' : ''}
-                    controls
                     autoPlay
                     loop
                     muted
