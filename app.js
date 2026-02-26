@@ -378,6 +378,7 @@ function PullDrawer({onNavigate, onHome}) {
             ></div>
             <div className="pull-panel" role="menu" aria-label="Quick Links">
                 <ul>
+                    <li key="home" role="menuitem" onClick={() => onHome && onHome()}>Home</li>
                     {items.map((it, i) => (
                         <li key={i} role="menuitem" onClick={() => onNavigate && onNavigate(it)}>{it}</li>
                     ))}
