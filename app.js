@@ -362,6 +362,10 @@ function Header() {
 
 function PullDrawer({onNavigate, onHome}) {
     const items = ["About", "Projects"];
+    const externalLinks = [
+        { label: "Sketchfab", url: "https://sketchfab.com/shovelsquid/" },
+        { label: "Itch.io", url: "https://shovelsquid.itch.io/" }
+    ];
     return (
         <div className="pull-drawer" aria-hidden="false">
             <div
@@ -376,6 +380,11 @@ function PullDrawer({onNavigate, onHome}) {
                 <ul>
                     {items.map((it, i) => (
                         <li key={i} role="menuitem" onClick={() => onNavigate && onNavigate(it)}>{it}</li>
+                    ))}
+                    {externalLinks.map((link, i) => (
+                        <li key={`ext-${i}`} role="menuitem">
+                            <a href={link.url} target="_blank" rel="noopener noreferrer">{link.label}</a>
+                        </li>
                     ))}
                 </ul>
             </div>
