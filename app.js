@@ -389,13 +389,18 @@ function Gallery() {
         'assets/final/Deserted_Robot.mp4',
         // 'assets/final/walk_render.mp4',
         'assets/portfolio/Pixel Art/Walking biped.gif',
+        'assets/portfolio/3D Models/Walker.png',
         // 'assets/portfolio/Weird Western/dingus.gif',
-        'assets/portfolio/Concept Art/Shepherd.png',
         'assets/portfolio/Pixel Art/bamf.gif',
-        'assets/final/GameDev.mp4',
+        'assets/portfolio/Concept Art/Shepherd.png',
+        'assets/portfolio/2D Animation/grude.mp4',
+        'assets/final/Droids.png',
+        'assets/final/wizard_animation_death.gif',
+        'assets/final/Enviro.png',
         // 'assets/final/clear_render.mp4',
         'assets/final/altar.mp4',
-        'assets/final/wizard_animation_death.gif',
+        'assets/final/Heart-UI.png',
+        'assets/final/GameDev.mp4',
         // 'assets/final/Gameplay Showcase.mp4'
         // 'assets/final/optionA.mp4'
     ];
