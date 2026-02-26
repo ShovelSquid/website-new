@@ -388,9 +388,10 @@ function PullDrawer({onNavigate, onHome}) {
 function Gallery() {
     const galleryImages = [
         'assets/final/fish.gif',
-        // 'assets/final/MicroTurret.mp4',
-        'assets/final/walk_render.mp4',
+        'assets/final/Deserted_Robot.mp4',
+        // 'assets/final/walk_render.mp4',
         'assets/final/GameFoot.mp4',
+        // 'assets/final/clear_render.mp4',
         'assets/final/altar.mp4',
         'assets/final/wizard_animation_death.gif',
         'assets/final/Gameplay Showcase.mp4'
