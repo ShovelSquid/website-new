@@ -401,7 +401,7 @@ function Gallery() {
         'assets/portfolio/Pixel Art/Walking biped.gif',
         'assets/portfolio/3D Models/Walker.png',
         // 'assets/portfolio/Weird Western/dingus.gif',
-        'assets/portfolio/Pixel Art/bamf.gif',
+        'assets/portfolio/Pixel Art/Bamf.gif',
         'assets/portfolio/Concept Art/Shepherd.png',
         'assets/portfolio/2D Animation/grude.mp4',
         'assets/final/Droids.png',
