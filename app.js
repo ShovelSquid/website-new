@@ -39,7 +39,7 @@ function Lightbox({src, type, onClose}) {
 }
 
 function Projects({section, onSelect}) {
-    const sections = ["3D Animation", "2D Animation", "Concept Art", "Illustration", "Games", 
+    const sections = ["3D Animation", "2D Animation", "Concept Art", "Illustration", "Games",
         "Pixel Art", "Short Videos", "Worldbuilding"
     ];
     const [isPending, startTransition] = React.useTransition();
@@ -56,24 +56,30 @@ function Projects({section, onSelect}) {
         });
     }, []);
 
-    // function onSelect(section) {
-    //     setSection(section);
-    // }
-    // const sections = ["Nople"];
-    return <div className="projectSection">
-        {sections.map((section) => (
-            <Interactitle key={section} title={section} onClick={() => onSelect(section)} />
-        ))}
-        {showContent && <ProjectCollection section={section} />}
-    </div>;
+    // Category switcher, rendered at the top of the left-hand gallery column
+    const categoryNav = (
+        <div className="projectSection">
+            {sections.map((s) => (
+                <Interactitle
+                    key={s}
+                    title={s}
+                    className={s === section ? "active" : ""}
+                    onClick={() => onSelect(s)}
+                />
+            ))}
+        </div>
+    );
+
+    return <ProjectCollection section={section} categoryNav={categoryNav} ready={showContent} />;
 }
 
-function ProjectCollection({section}) {
+function ProjectCollection({section, categoryNav, ready}) {
     const filepath = "assets/portfolio/" + section + "/";
-    const [proj, setProj] = React.useState(null);
     const [visibleCount, setVisibleCount] = React.useState(0);
     const [lightbox, setLightbox] = React.useState({ src: null, type: null });
-    
+    // Which gallery item is shown large in the highlight column on the right
+    const [selectedIndex, setSelectedIndex] = React.useState(0);
+
     // Helper function to check if it's a YouTube URL
     const isYouTube = (file) => {
         return file && (file.includes('youtube.com') || file.includes('youtu.be'));
@@ -88,7 +94,7 @@ function ProjectCollection({section}) {
     
     const files = {
         "3D Animation": [
-            { file: "interceptor.mp4" },
+            { file: "interceptor.mp4", description: "A 3D animated sequence focused on motion, weight, and timing." },
             { file: "walk_cycle_proper.mp4" },
             { file: "altar.mp4" },
             { file: "sledger-full.mp4" },
@@ -96,7 +102,7 @@ function ProjectCollection({section}) {
             { file: "devil.gif" }
         ],
         "2D Animation": [
-            { file: "groblin.gif" },
+            { file: "groblin.gif", description: "A looping 2D character animation exploring squash, stretch, and personality." },
             { file: "Human_Torch_Wout_Fire_Resistance.gif" },
             { file: "movement.gif" },
             { file: "Triangle_Shatter.gif" },
@@ -107,7 +113,7 @@ function ProjectCollection({section}) {
             { file: "mcdoodin.mp4" }
         ],
         "Concept Art": [
-            { file: "Fighter_concepts.png" },
+            { file: "Fighter_concepts.png", description: "Character concept exploration with multiple silhouette and costume variations." },
             { file: "Glassics.png" },
             { file: "Fighter_Slash_Concept.png" },
             { file: "bimbus concept.png" },
@@ -115,18 +121,18 @@ function ProjectCollection({section}) {
             { file: "Soldier_Concept.png" }
         ],
         "Illustration": [
-            { file: "Glasshead.png" },
+            { file: "Glasshead.png", description: "A finished digital illustration emphasizing color and composition." },
             { file: "Murder.png" },
             { file: "Cyborg Hand.png" },
             { file: "string.jpeg" },
             { file: "Shepherd.png" }
         ],
         "Games": [
-            { file: "perihelion.mp4", link: "https://shovelsquid.itch.io/perihelion" },
+            { file: "perihelion.mp4", link: "https://shovelsquid.itch.io/perihelion", description: "Gameplay from a personal game project. Use the link to play it in the browser." },
             { file: "celestial_combat.mp4", link: "https://shovelsquid.itch.io/celestialcombat" }
         ],
         "Pixel Art": [
-            { file: "Bamf.gif" },
+            { file: "Bamf.gif", description: "An animated pixel-art sprite built frame by frame." },
             { file: "cursed_paladin_death.gif" },
             { file: "ship.gif" },
             { file: "Walking biped.gif" },
@@ -134,12 +140,12 @@ function ProjectCollection({section}) {
             { file: "Reload.GIF" }
         ],
         "Short Videos": [
-            { file: "lightlinks.mp4"},
+            { file: "lightlinks.mp4", description: "A short-form video edit. Click the highlight to watch it full size." },
             { file: "https://www.youtube.com/shorts/ugHOE0BNYXA", title: "Late Night TV"},
             { file: "https://www.youtube.com/watch?v=PnTSK45W95U", title: "Fight Scene"},
         ],
         "Worldbuilding": [
-            { file: "Arcane World Notes.jpg" },
+            { file: "Arcane World Notes.jpg", description: "Worldbuilding notes sketching out the lore and systems of an original setting." },
             { file: "Arcane World Notes 2.jpg" },
         ]
     }
@@ -165,11 +171,17 @@ function ProjectCollection({section}) {
         return {
             file: fileValue,
             link: typeof item === 'object' ? item.link : null,
+            description: typeof item === 'object' ? item.description : null,
             title: generatedTitle
         };
     });
-    
-    // Progressive rendering - add items gradually
+
+    // Reset the highlighted item whenever the category changes
+    React.useEffect(() => {
+        setSelectedIndex(0);
+    }, [section]);
+
+    // Progressive rendering - add gallery thumbnails gradually
     React.useEffect(() => {
         setVisibleCount(0);
         const incrementVisible = () => {
@@ -183,7 +195,7 @@ function ProjectCollection({section}) {
         };
         requestAnimationFrame(incrementVisible);
     }, [section, projects.length]);
-    
+
     const openLightbox = (src, type) => {
         setLightbox({ src, type });
     };
@@ -191,82 +203,112 @@ function ProjectCollection({section}) {
     const closeLightbox = () => {
         setLightbox({ src: null, type: null });
     };
-    
+
+    const isVideoFile = (file) => file.endsWith('.mp4') || file.endsWith('.webm');
+
+    // Render a project's media.
+    //   mode "thumb"     -> non-interactive preview; the surrounding tile handles selection
+    //   mode "highlight" -> large view; clicking opens the full-size lightbox
+    const renderMedia = (project, mode) => {
+        const isHighlight = mode === 'highlight';
+        const youtubeId = isYouTube(project.file) ? getYouTubeId(project.file) : null;
+
+        if (youtubeId) {
+            return (
+                <div
+                    className="media-frame"
+                    onClick={isHighlight ? () => openLightbox(youtubeId, 'youtube') : undefined}
+                    style={isHighlight ? {cursor: 'zoom-in'} : undefined}
+                >
+                    <iframe
+                        src={`https://www.youtube.com/embed/${youtubeId}`}
+                        title={project.title}
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                        style={{pointerEvents: 'none'}}
+                    />
+                </div>
+            );
+        }
+
+        const src = filepath + project.file;
+
+        if (isVideoFile(project.file)) {
+            return (
+                <video
+                    src={src}
+                    loop
+                    muted
+                    autoPlay
+                    playsInline
+                    preload="metadata"
+                    onClick={isHighlight ? () => openLightbox(src, 'video') : undefined}
+                    style={isHighlight ? {cursor: 'zoom-in'} : {pointerEvents: 'none'}}
+                />
+            );
+        }
+
+        return (
+            <img
+                src={src}
+                alt={project.title}
+                loading="lazy"
+                onClick={isHighlight ? () => openLightbox(src, 'image') : undefined}
+                style={isHighlight ? {cursor: 'zoom-in'} : {pointerEvents: 'none'}}
+            />
+        );
+    };
+
+    const selected = projects[selectedIndex] || projects[0];
+
     return (
         <>
             <Lightbox src={lightbox.src} type={lightbox.type} onClose={closeLightbox} />
-            <div className="projectCollection">
-                {projects.slice(0, visibleCount).map((project, index) => {
-                    const youtubeId = isYouTube(project.file) ? getYouTubeId(project.file) : null;
-                    
-                    return (
-                        <div key={index} className={proj ? proj : "project"}>
-                            <h3>{project.title}</h3>
-                            {youtubeId ? (
-                                <div 
-                                    onClick={() => openLightbox(youtubeId, 'youtube')}
-                                    style={{cursor: 'pointer', width: '100%', height: '100%'}}
+            <div className="projectsLayout">
+                {/* Left: category switcher + gallery thumbnails */}
+                <div className="galleryColumn">
+                    {categoryNav}
+                    {ready && (
+                        <div className="projectCollection">
+                            {projects.slice(0, visibleCount).map((project, index) => (
+                                <div
+                                    key={index}
+                                    className={"project" + (index === selectedIndex ? " selected" : "")}
+                                    onClick={() => setSelectedIndex(index)}
                                 >
-                                    <iframe
-                                        width="100%"
-                                        height="100%"
-                                        src={`https://www.youtube.com/embed/${youtubeId}`}
-                                        title={project.title}
-                                        frameBorder="0"
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                        allowFullScreen
-                                        style={{pointerEvents: 'none'}}
-                                    />
+                                    <h3>{project.title}</h3>
+                                    {renderMedia(project, 'thumb')}
                                 </div>
-                            ) : project.link ? (
-                                <a href={project.link} target="_blank" rel="noopener noreferrer">
-                                    {project.file.endsWith('.mp4') || project.file.endsWith('.webm') ? (
-                                        <video 
-                                            src={filepath + project.file} 
-                                            controls 
-                                            loop 
-                                            muted 
-                                            autoPlay
-                                            preload="metadata"
-                                        />
-                                    ) : (
-                                        <img 
-                                            src={filepath + project.file} 
-                                            alt={project.title} 
-                                            loading="lazy"
-                                        />
-                                    )}
+                            ))}
+                        </div>
+                    )}
+                </div>
+
+                {/* Right: highlighted view + description */}
+                <div className="highlightColumn">
+                    {ready && selected && (
+                        <div className="highlight">
+                            <div className="highlight-media">
+                                {renderMedia(selected, 'highlight')}
+                            </div>
+                            <h3 className="highlight-title">{selected.title}</h3>
+                            <p className="highlight-description">
+                                {selected.description || `A piece from my ${section} collection.`}
+                            </p>
+                            {selected.link && (
+                                <a
+                                    className="highlight-link"
+                                    href={selected.link}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    Open project ↗
                                 </a>
-                            ) : (
-                                project.file.endsWith('.mp4') || project.file.endsWith('.webm') ? (
-                                    <video 
-                                        src={filepath + project.file} 
-                                        onClick={(e) => {
-                                            e.preventDefault();
-                                            openLightbox(filepath + project.file, 'video');
-                                        }}
-                                        loop 
-                                         
-                                        autoPlay
-                                        preload="metadata"
-                                        style={{cursor: 'pointer'}}
-                                    />
-                                ) : (
-                                    <img 
-                                        src={filepath + project.file} 
-                                        alt={project.title} 
-                                        loading="lazy"
-                                        onClick={(e) => {
-                                            e.preventDefault();
-                                            openLightbox(filepath + project.file, 'image');
-                                        }}
-                                        style={{cursor: 'pointer'}}
-                                    />
-                                )
                             )}
                         </div>
-                    );
-                })}
+                    )}
+                </div>
             </div>
         </>
     );

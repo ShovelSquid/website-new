@@ -137,104 +137,220 @@ body {
     margin: -10vh calc(45px + 6vw);
 }
 
-.projectSection {
-    position: flex;
-    margin-top: 12vh;
-    margin-left: calc(94px + 6vw);
-    width: 80%;
-    /* background-color: #cacaca; */
-    transition: all 0.6s cubic-bezier(0.075, 0.82, 0.165, 1);
+/* ===== Projects: gallery (left) + highlighted view (right) ===== */
+.projectsLayout {
+    display: flex;
+    gap: 28px;
+    align-items: flex-start;
+    box-sizing: border-box;
+    width: 90%;
+    max-width: 1500px;
+    margin: 19vh auto 0;
+    height: 59vh;            /* fits between the page title and the fixed nav buttons */
     text-align: left;
+    transition: all 0.6s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+/* Left column: takes between a third and a half of the width */
+.galleryColumn {
+    flex: 0 0 40%;
+    max-width: 48%;
+    height: 100%;
+    overflow-y: auto;
+    padding-right: 8px;
+}
+
+/* Right column: the highlighted view and its caption */
+.highlightColumn {
+    flex: 1 1 auto;
+    min-width: 0;
+    height: 100%;
+    overflow-y: auto;
+}
+
+/* Category switcher, stacked above the gallery thumbnails */
+.projectSection {
+    width: 100%;
+    margin: 0 0 14px 0;
+    text-align: left;
+    transition: all 0.6s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
 .projectSection h1 {
     position: relative;
     font-weight: 300;
-    font-size: 1.4em;
-    width: 260px;
-    /* background-color: tomato; */
-    margin-bottom: -10px;
+    font-size: 1.1em;
+    width: fit-content;
+    margin: 3px 0;
+    cursor: pointer;
     transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
+.projectSection h1.active {
+    color: #ff0000;
+    border-bottom: 2px solid #ff0000;
+}
+
+/* Gallery thumbnail grid */
 .projectCollection {
     position: relative;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
     gap: 10px;
-    padding: 10px;
-    /* margin-left: 20px;sf */
-    margin-right: 20px;
-    margin-bottom: 0px;
-    /* margin-top: 20px; */
-    /* width: calc(100vw - 40px);; */
-    width: 70%;
-}
-
-
-@media (min-width: 700px) {
-    /* .projectCollection {
-        position: fixed;
-        right: 20px;
-        top: 10vh;
-        margin-left: 0;
-    } */
-    
-    .projectCollection {
-        /* margin-top: -230px; */
-        margin-left: calc(240px + 2vw);
-        width: calc(100vw - (200px + 2vw) - 320px);
-        transform: translateY(-270px);
-        margin-bottom: 0px;
-        margin-right: 320px; /* Adjust based on projectSection width + gap */
-    }
+    padding: 2px;
+    width: 100%;
 }
 
 .project {
-    width: 100%;
-    height: 100%;
+    display: flex;
+    flex-direction: column;
+    aspect-ratio: 1 / 1;
     overflow: hidden;
     border-radius: 8px;
     background-color: #f0f0f044;
-    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    cursor: pointer;
+    transition: transform 0.25s cubic-bezier(0.25, 0.8, 0.25, 1),
+                box-shadow 0.25s ease, background-color 0.25s ease;
 }
 
 .project:hover {
-    cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18);
     background-color: #f0f0f0;
-    z-index: 10;
-    transform: scale(1.3);
-    transition: transform 0.9s cubic-bezier(0.25, 0.8, 0.25, 1);
+    transform: translateY(-2px);
 }
 
-
-.project img,
-.project video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-
-.project:hover img, .project:hover video {
-    transform: scale(0.9);
-    transform: translateY(-10%);
-    /* object-fit: contain; */
-    transition: all 0.9s cubic-bezier(0.25, 0.8, 0.25, 1);
+.project.selected {
+    outline: 2px solid #ff0000;
+    outline-offset: -2px;
+    background-color: #f0f0f0;
+    box-shadow: 0 4px 12px rgba(255, 0, 0, 0.22);
 }
 
 .project h3 {
-    padding: 10px;
+    padding: 6px 8px;
     margin: 0;
-    font-size: 1em;
+    font-size: 0.78em;
     font-family: "PublicFont", sans-serif;
     font-weight: 100;
     text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.project:hover h3 {
-    color: red;
+.project.selected h3 {
+    color: #ff0000;
+}
+
+.project img,
+.project video,
+.project .media-frame {
+    flex: 1 1 auto;
+    min-height: 0;
+    width: 100%;
+    object-fit: cover;
+}
+
+.project .media-frame {
+    position: relative;
+    overflow: hidden;
+}
+
+.project .media-frame iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+/* Highlighted view */
+.highlight {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.highlight-media {
+    width: 100%;
+    background-color: #f0f0f033;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.highlight-media img,
+.highlight-media video {
+    width: 100%;
+    max-height: 58vh;
+    object-fit: contain;
+    border-radius: 10px;
+    display: block;
+}
+
+.highlight-media .media-frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+}
+
+.highlight-media .media-frame iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    border-radius: 10px;
+}
+
+.highlight-title {
+    font-weight: 300;
+    font-size: 1.3em;
+    margin: 16px 0 6px;
+}
+
+.highlight-description {
+    font-weight: 300;
+    font-size: 1.05em;
+    line-height: 1.55;
+    margin: 0 0 12px;
+    max-width: 62ch;
+}
+
+.highlight-link {
+    font-weight: 400;
+    color: #c00;
+    text-decoration: none;
+    width: fit-content;
+}
+
+.highlight-link:hover {
+    text-decoration: underline;
+}
+
+/* Stack the two columns on narrow screens */
+@media (max-width: 800px) {
+    .projectsLayout {
+        flex-direction: column;
+        width: calc(100% - 40px);
+        margin: 16vh auto 0;
+        height: auto;
+        padding-bottom: 18vh; /* clear the fixed nav buttons */
+    }
+
+    .galleryColumn,
+    .highlightColumn {
+        flex: 1 1 auto;
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        overflow: visible;
+    }
+
+    .highlight-media img,
+    .highlight-media video {
+        max-height: 50vh;
+    }
 }
 
 #aboutContent {
@@ -1122,16 +1238,4 @@ button:hover .icon-blog svg {
 
 .lightbox-close:hover {
     transform: scale(1.2);
-}
-
-/* Make project items clickable */
-.project img,
-.project video {
-    transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.project img:hover,
-.project video:hover {
-    /* opacity: 0.8; */
-    transform: scale(1.02);
 }
