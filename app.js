@@ -17,18 +17,8 @@ function Lightbox({src, type, onClose}) {
     return (
         <div className="lightbox" onClick={onClose}>
             <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
-                {type === 'youtube' ? (
-                    <iframe
-                        width="80%"
-                        height="80%"
-                        src={`https://www.youtube.com/embed/${src}?autoplay=1`}
-                        title="YouTube video"
-                        frameBorder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                    />
-                ) : type === 'video' ? (
-                    <video src={src} controls autoPlay loop />
+                {type === 'video' ? (
+                    <video src={src} autoPlay loop />
                 ) : (
                     <img src={src} alt="Full size" />
                 )}
@@ -39,8 +29,7 @@ function Lightbox({src, type, onClose}) {
 }
 
 function Projects({section, onSelect}) {
-    const sections = ["3D Animation", "2D Animation", "Concept Art", "Illustration", "Games",
-        "Pixel Art", "Short Videos", "Worldbuilding"
+    const sections = ["2D Animation", "3D Animation", "3D Models", "Concept Art", "UI Icons", "Spritesheets", "Pixel Art", "Games"
     ];
     const [isPending, startTransition] = React.useTransition();
     const [showContent, setShowContent] = React.useState(false);
@@ -80,101 +69,121 @@ function ProjectCollection({section, categoryNav, ready}) {
     // Which gallery item is shown large in the highlight column on the right
     const [selectedIndex, setSelectedIndex] = React.useState(0);
 
-    // Helper function to check if it's a YouTube URL
-    const isYouTube = (file) => {
-        return file && (file.includes('youtube.com') || file.includes('youtu.be'));
-    };
-
-    // Helper function to extract YouTube video ID
-    const getYouTubeId = (url) => {
-        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|shorts\/|&v=)([^#&?]*).*/;
-        const match = url.match(regExp);
-        return (match && match[2].length === 11) ? match[2] : null;
-    };
-    
     const files = {
+        "2D Animation": [
+            { file: "meg_ryan.mp4", description: "A looping 2D character animation exploring squash, stretch, and personality." },
+            { file: "grude.mp4" },
+            { file: "groblin.gif" },
+            // { file: "Human_Torch_Wout_Fire_Resistance.gif" },
+            // { file: "movement.gif" },
+            // { file: "Triangle_Shatter.gif" },
+            // { file: "father_figure.mp4" },
+            { file: "punch.gif"},
+            // { file: "handcules.mp4" },
+            // { file: "Man.mp4" },
+            // { file: "mcdoodin.mp4" }
+        ],
         "3D Animation": [
             { file: "interceptor.mp4", description: "A 3D animated sequence focused on motion, weight, and timing." },
-            { file: "walk_cycle_proper.mp4" },
-            { file: "altar.mp4" },
-            { file: "sledger-full.mp4" },
-            { file: "first_person_animations.mp4" },
-            { file: "devil.gif" }
+            { file: "robot_walk_cycle.mp4" },
+            { file: "hunsk.mp4" },
+            // { file: "MicroTurret.mp4" },
+            // { file: "altar.mp4" },
+            // { file: "sledger-full.mp4" },
+            { file: "hammer_showcase.mp4" },
+            { file: "Mikey.mp4" },
+            // { file: "devil.gif" }
         ],
-        "2D Animation": [
-            { file: "groblin.gif", description: "A looping 2D character animation exploring squash, stretch, and personality." },
-            { file: "Human_Torch_Wout_Fire_Resistance.gif" },
-            { file: "movement.gif" },
-            { file: "Triangle_Shatter.gif" },
-            { file: "father_figure.mp4" },
-            { file: "handcules.mp4" },
-            { file: "rat.mp4" },
-            { file: "Man.mp4" },
-            { file: "mcdoodin.mp4" }
+        "3D Models": [
+            { file: "devil.gif", description: "A 3D model rendered out as an animated turntable." },
+            { file: "Leg Bots.png" },
+            { file: "MacroTurret.png" },
+            { file: "sledger-full.mp4" },
+            { file: "Mic Man.png" },
+            { file: "ruined_knights.png" },
+            { file: "walker.png" },
         ],
         "Concept Art": [
-            { file: "Fighter_concepts.png", description: "Character concept exploration with multiple silhouette and costume variations." },
+            { file: "Robot_Types.png", description: "Concept exploration of robot types, silhouettes, and variations." },
+            { file: "Robot_Types_Presentation.png" },
+            { file: "Robot_Silhouettes.png" },
+            // { file: "Helldivers Sketches.png" },
+            // { file: "Design Ideation.png" },
+            { file: "Trash-Pits.png" },
+            { file: "Antaur.png" },
+            // { file: "Fighter_concept.png" },
+            { file: "interceptor concept.png" },
             { file: "Glassics.png" },
-            { file: "Fighter_Slash_Concept.png" },
-            { file: "bimbus concept.png" },
-            { file: "ruined_knights.png" },
-            { file: "Soldier_Concept.png" }
+            { file: "Tall_boy.png" },
+            { file: "string.jpeg" },
+            { file: "Shepherd.png" },
+            { file: "Wizard Blasties.png" },
+            { file: "Murder.png" },
+            { file: "Rock_Angels.png" },
+            { file: "Glasshead.png" },
+            // { file: "Design Sketch.png"},
+            // { file: "Fighter_Slash_Concept.png" },
+            // { file: "bimbus concept.png" },
+            // { file: "ruined_knights.png" },
+            // { file: "Soldier_Concept.png" }
+        ],
+        "Spritesheets": [
+            { file: "boomer_sheet.png", description: "A sprite sheet laying out the animation frames for a game character." },
+            { file: "beamup-Sheet.png" },
+            // { file: "flyer-expord-light-1.png" },
+            { file: "monkey-run-sheet.png" },
+            { file: "thorg_sheet.png" },
         ],
         "Illustration": [
-            { file: "Glasshead.png", description: "A finished digital illustration emphasizing color and composition." },
+            { file: "Glasshead.png" },
             { file: "Murder.png" },
             { file: "Cyborg Hand.png" },
             { file: "string.jpeg" },
             { file: "Shepherd.png" }
         ],
-        "Games": [
-            { file: "perihelion.mp4", link: "https://shovelsquid.itch.io/perihelion", description: "Gameplay from a personal game project. Use the link to play it in the browser." },
-            { file: "celestial_combat.mp4", link: "https://shovelsquid.itch.io/celestialcombat" }
+        // "Games": [
+        //     { file: "perihelion.mp4", link: "https://shovelsquid.itch.io/perihelion" },
+        //     { file: "celestial_combat.mp4", link: "https://shovelsquid.itch.io/celestialcombat" }
+        // ],
+        "UI Icons": [
+            { file: "c4.png", description: "A game UI icon designed to read clearly at small sizes." },
+            { file: "heart_hit_sheet.png" },
+            { file: "MenuUI.mp4" },
         ],
         "Pixel Art": [
             { file: "Bamf.gif", description: "An animated pixel-art sprite built frame by frame." },
+            { file: "Crawler.gif" },
+            { file: "enor.gif" },
             { file: "cursed_paladin_death.gif" },
             { file: "ship.gif" },
             { file: "Walking biped.gif" },
             { file: "Ghoul.gif" },
-            { file: "Reload.GIF" }
+            { file: "Reload.gif" }
         ],
-        "Short Videos": [
-            { file: "lightlinks.mp4", description: "A short-form video edit. Click the highlight to watch it full size." },
-            { file: "https://www.youtube.com/shorts/ugHOE0BNYXA", title: "Late Night TV"},
-            { file: "https://www.youtube.com/watch?v=PnTSK45W95U", title: "Fight Scene"},
+        "Weird Western": [
+            { file: "Boomer.gif" },
+            { file: "dingus.gif" },
+            { file: "evolution.gif" },
+            { file: "Farm_enemy.gif" },
+            { file: "Thorg.gif" },
+            { file: "Thunkalunkadunkus.gif" }
         ],
-        "Worldbuilding": [
-            { file: "Arcane World Notes.jpg", description: "Worldbuilding notes sketching out the lore and systems of an original setting." },
-            { file: "Arcane World Notes 2.jpg" },
+        "Games": [
+            { file: "perihelion.mp4", link: "https://shovelsquid.itch.io/perihelion", description: "Gameplay from a personal game project. Use the link to play it." },
+            { file: "celestial_combat.mp4", link: "https://shovelsquid.itch.io/celestialcombat" },
+            { file: "GameFoot.mp4" },
+            { file: "Gameplay Showcase.mp4", link: "https://store.steampowered.com/app/2968800/SLEDGE/" }
         ]
     }
-    const projects = files[section].map(item => {
-        const fileValue = typeof item === 'string' ? item : item.file;
-        const customTitle = typeof item === 'object' && item.title ? item.title : null;
-        
-        // Generate title, avoiding processing YouTube URLs
-        let generatedTitle;
-        if (customTitle) {
-            generatedTitle = customTitle;
-        } else if (isYouTube(fileValue)) {
-            // For YouTube, use the video ID as title
-            generatedTitle = getYouTubeId(fileValue) || 'YouTube Video';
-        } else {
-            // Normal file processing
-            generatedTitle = fileValue
-                .replace(/\.(jpg|jpeg|png|gif|mp4|webm)$/, '')
-                .replace(/-|_/g, ' ')
-                .replace(/\b\w/g, char => char.toUpperCase());
-        }
-        
-        return {
-            file: fileValue,
-            link: typeof item === 'object' ? item.link : null,
-            description: typeof item === 'object' ? item.description : null,
-            title: generatedTitle
-        };
-    });
+    const projects = files[section].map(item => ({
+        file: typeof item === 'string' ? item : item.file,
+        link: typeof item === 'object' ? item.link : null,
+        description: typeof item === 'object' ? item.description : null,
+        title: (typeof item === 'string' ? item : item.file)
+            .replace(/\.(jpg|jpeg|png|gif|mp4|webm)$/, '')
+            .replace(/-|_/g, ' ')
+            .replace(/\b\w/g, char => char.toUpperCase())
+    }));
 
     // Reset the highlighted item whenever the category changes
     React.useEffect(() => {
@@ -211,27 +220,6 @@ function ProjectCollection({section, categoryNav, ready}) {
     //   mode "highlight" -> large view; clicking opens the full-size lightbox
     const renderMedia = (project, mode) => {
         const isHighlight = mode === 'highlight';
-        const youtubeId = isYouTube(project.file) ? getYouTubeId(project.file) : null;
-
-        if (youtubeId) {
-            return (
-                <div
-                    className="media-frame"
-                    onClick={isHighlight ? () => openLightbox(youtubeId, 'youtube') : undefined}
-                    style={isHighlight ? {cursor: 'zoom-in'} : undefined}
-                >
-                    <iframe
-                        src={`https://www.youtube.com/embed/${youtubeId}`}
-                        title={project.title}
-                        frameBorder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                        style={{pointerEvents: 'none'}}
-                    />
-                </div>
-            );
-        }
-
         const src = filepath + project.file;
 
         if (isVideoFile(project.file)) {
@@ -316,28 +304,27 @@ function ProjectCollection({section, categoryNav, ready}) {
 
 function About() {
   return <div id="aboutContent">
-    <p>Hello! I'm Kaelen Cook, an artist and developer with a passion for creating immersive experiences through 3D animation, concept art, and game development. With a background in both art and technology, I strive to blend creativity with technical skills to bring ideas to life.</p>
-    <img src="assets/images/me.jpg"></img>
-    <p>My journey began with a fascination for storytelling and visual arts, which led me to explore various mediums and techniques. Over the years, I've honed my skills in 3D modeling, animation, and digital painting, allowing me to create compelling characters and environments.</p>
-    <p>In addition to my artistic pursuits, I have a strong interest in game development. I enjoy designing interactive experiences that engage players and challenge their perceptions. Whether it's through intricate gameplay mechanics or captivating narratives, I aim to create games that leave a lasting impact.</p>
-    <p>When I'm not immersed in my work, I enjoy exploring new technologies, collaborating with fellow creatives, and staying up-to-date with industry trends. I'm always eager to learn and grow, pushing the boundaries of what's possible in the world of art and development.</p>
-    <p>Thank you for visiting my portfolio! Feel free to explore my projects and reach out if you'd like to connect or collaborate.</p>
-    <p><a href="assets/Kaelen Cook Resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a></p>
+    <img src="assets/images/me.jpg" alt="Kaelen Cook"></img>
+    <p>Hello! I'm Kaelen, an artist/developer hybrid. I'm interested in making all kinds of games! I do ui, vfx, environments, characters, stories, and more. I love movies, comedy, and making games feel fun to play.</p>
+    <p>If you're interested in working together, please send me an email at <a href="mailto:kaelen1cook@gmail.com">kaelen1cook@gmail.com</a></p>
   </div>
 }
 
 function Contact() {
   return <div id="contactContent">
     <div id="aboutContent">
-        <p>If you'd like to get in touch, feel free to reach out through any of the following methods:</p>
+        <p>You can send me an email at:</p>
         <ul>
-            <li>Email:</li>
-                <ul>
-                <li><a href="mailto:kaelenscook@shovelsquid.com">kaelenscook@shovelsquid.com</a></li>
-                <li><a href="mailto:kaelen1cook@gmail.com">kaelen1cook@gmail.com</a></li>
-                </ul>
+            <li>Email: <a href="mailto:kaelen1cook@gmail.com">kaelen1cook@gmail.com</a></li>
+        </ul>
+        <p>Or find me on discord:</p>
+        <ul>
             <li>Discord: <a href="https://discord.com/">ShovelSquid</a></li>
-            <li>Phone: <a href="https://en.wikipedia.org/wiki/Telephone_number">+1(310)562-8805</a></li>
+        </ul>
+        <p>Here are some of my other links:</p>
+        <ul>
+            <li><a href="https://sketchfab.com/shovelsquid/">Sketchfab</a></li>
+            <li><a href="https://itch.io/profile/shovelsquid/">Itch.io</a></li>
         </ul>
 
         </div>
@@ -354,7 +341,7 @@ function Header() {
 
     const pages = ["About", "Projects", "Contact"];
     const [state, setState] = React.useState(null);
-    const [section, setSection] = React.useState("3D Animation");
+    const [section, setSection] = React.useState("2D Animation");
     let content = null;
     let mainTitle = "Kaelen Cook";
     let subTitle = "Artist & Developer";
@@ -370,10 +357,10 @@ function Header() {
             window.location.href = "#projects";
             setState("projects");
         }
-        if (page == "Contact") {
-            window.location.href = "#contact";
-            setState("contact");
-        }
+        // if (page == "Contact") {
+        //     window.location.href = "#contact";
+        //     setState("contact");
+        // }
         if (page == "Links") {
             window.location.href = "#links";
             setState("links");
@@ -401,25 +388,216 @@ function Header() {
     if (state === "links") mainTitle = "Links";
     if (state === "blog") mainTitle = "Blog";
     return <div className={`main ${state || ''}`}>
+        <PullDrawer onNavigate={handleClick} onHome={back} />
+        {state === null && <Gallery></Gallery>}
         <Title title={mainTitle} id="main" />
-        <Title title={state ? state.charAt(0).toUpperCase() + state.slice(1) : subTitle} id="sub"/>
+        {/* <Title title={state ? state.charAt(0).toUpperCase() + state.slice(1) : subTitle} id="sub"/> */}
         {state !== null && <BackButton id="back" onClick={back} page={'BackIcon'}/>}
         {state === "about" && <About />}
         {state === "projects" && <Projects section={section} onSelect={selectSection}/>}
         {state === "contact" && <Contact />}
         {/* {state === "links" && <Title title="Links" />} */}
         {/* {state === "blog" && <Title title="Blog" />} */}
-        <div id="buttonContainer">
+        {/* <div id="buttonContainer">
         <div id="buttons">
             <AboutButton id="about" onClick={() => handleClick("About")} page={'About'}/>
             <ProjectsButton id="projects" onClick={() => handleClick("Projects")} page={'Projects'}/>
             <ContactButton id="contact" onClick={() => handleClick("Contact")} page={'Contact'}/>
-            {/* {pages.map((page) => (
-                <Button key={page} page={page} id={page.toLowerCase()} className="nav" onClick={() => handleClick(page)} image={"assets/icons/"+page+".svg"} />
-            ))} */}
         </div>
-        </div>
+        </div> */}
     </div>
+}
+
+function PullDrawer({onNavigate, onHome}) {
+    const items = ["About", "Projects"];
+    const externalLinks = [
+        { label: "Sketchfab", url: "https://sketchfab.com/shovelsquid/" },
+        { label: "Itch.io", url: "https://shovelsquid.itch.io/" }
+    ];
+    return (
+        <div className="pull-drawer" aria-hidden="false">
+            <div
+                className="pull-circle"
+                role="button"
+                tabIndex={0}
+                aria-label="Home"
+                onClick={() => onHome && onHome()}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') onHome && onHome(); }}
+            ></div>
+            <div className="pull-panel" role="menu" aria-label="Quick Links">
+                <ul>
+                    <li key="home" role="menuitem" onClick={() => onHome && onHome()}>Home</li>
+                    {items.map((it, i) => (
+                        <li key={i} role="menuitem" onClick={() => onNavigate && onNavigate(it)}>{it}</li>
+                    ))}
+                    {externalLinks.map((link, i) => (
+                        <li key={`ext-${i}`} role="menuitem">
+                            <a href={link.url} target="_blank" rel="noopener noreferrer">{link.label}</a>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        </div>
+    );
+}
+
+function Gallery() {
+    const galleryImages = [
+        'assets/final/fish.gif',
+        'assets/final/Deserted_Robot.mp4',
+        // 'assets/final/walk_render.mp4',
+        'assets/portfolio/Pixel Art/Walking biped.gif',
+        'assets/portfolio/3D Models/Walker.png',
+        // 'assets/portfolio/Weird Western/dingus.gif',
+        'assets/portfolio/Pixel Art/Bamf.gif',
+        'assets/portfolio/Concept Art/Shepherd.png',
+        'assets/portfolio/2D Animation/grude.mp4',
+        'assets/final/Droids.png',
+        'assets/final/wizard_animation_death.gif',
+        'assets/final/Enviro.png',
+        // 'assets/final/clear_render.mp4',
+        'assets/final/altar.mp4',
+        'assets/final/Heart-UI.png',
+        'assets/final/GameDev.mp4',
+        // 'assets/final/Gameplay Showcase.mp4'
+        // 'assets/final/optionA.mp4'
+    ];
+    
+    const [currentIndex, setCurrentIndex] = React.useState(0);
+    const [isTransitioning, setIsTransitioning] = React.useState(false);
+    
+    const goToImage = (index) => {
+        if (isTransitioning) return;
+        setIsTransitioning(true);
+        setCurrentIndex(index);
+        setTimeout(() => setIsTransitioning(false), 300);
+    };
+    
+    const nextImage = () => {
+        const nextIndex = (currentIndex + 1) % galleryImages.length;
+        goToImage(nextIndex);
+    };
+    
+    const prevImage = () => {
+        const nextIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
+        goToImage(nextIndex);
+    };
+    
+    // Helper function to check if file is a video
+    const isVideo = (filename) => {
+        return filename.endsWith('.mp4') || filename.endsWith('.webm') || filename.endsWith('.mov');
+    };
+    
+    const currentMedia = galleryImages[currentIndex];
+    const isCurrentVideo = isVideo(currentMedia);
+    
+    // Keyboard navigation
+    React.useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (e.key === 'ArrowLeft') prevImage();
+            if (e.key === 'ArrowRight') nextImage();
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [currentIndex]);
+    
+    return (
+        <div id="gallery">
+            <button className="gallery-nav-button left" onClick={prevImage}>
+                <svg 
+                    className="icon icon-backicon"
+                    xmlns="http://www.w3.org/2000/svg" 
+                    viewBox="0 0 300 300" 
+                    width="50" 
+                    height="50"
+                >
+                    <path 
+                        id="gallery-left-1" 
+                        d="M103.118153,104.717394C88.396377,118.302176,54.045567,150,54.045567,150s135.825909,0,135.825909,0" 
+                        transform="translate(28.041479-.942019)" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        strokeWidth="4"
+                    />
+                    <path 
+                        id="gallery-left-2" 
+                        d="M103.118154,198.042939c0,0-36.35081-36.478021-51.072586-47.604792" 
+                        transform="translate(30.041478-1.380166)" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        strokeWidth="4"
+                    />
+                </svg>
+            </button>
+            
+            {isCurrentVideo ? (
+                <video 
+                    key={currentMedia}
+                    src={currentMedia}
+                    className={isTransitioning ? 'gallery-transition' : ''}
+                    autoPlay
+                    loop
+                    muted
+                />
+            ) : (
+                <img 
+                    src={currentMedia}
+                    className={isTransitioning ? 'gallery-transition' : ''}
+                />
+            )}
+            
+            <button className="gallery-nav-button right" onClick={nextImage}>
+                <svg 
+                    className="icon icon-backicon"
+                    xmlns="http://www.w3.org/2000/svg" 
+                    viewBox="0 0 300 300" 
+                    width="50" 
+                    height="50"
+                >
+                    <path 
+                        id="gallery-right-1" 
+                        d="M103.118153,104.717394C88.396377,118.302176,54.045567,150,54.045567,150s135.825909,0,135.825909,0" 
+                        transform="translate(28.041479-.942019) scale(-1, 1) translate(-300, 0)" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        strokeWidth="4"
+                    />
+                    <path 
+                        id="gallery-right-2" 
+                        d="M103.118154,198.042939c0,0-36.35081-36.478021-51.072586-47.604792" 
+                        transform="translate(30.041478-1.380166) scale(-1, 1) translate(-300, 0)" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        strokeWidth="4"
+                    />
+                </svg>
+            </button>
+            
+            <div className="gallery-thumbnails">
+                {galleryImages.map((img, index) => {
+                    const isVideoThumb = isVideo(img);
+                    return isVideoThumb ? (
+                        <video
+                            key={index}
+                            src={img}
+                            className={`gallery-thumbnail ${index === currentIndex ? 'active' : ''}`}
+                            onClick={() => goToImage(index)}
+                            muted
+                            loop
+                            autoPlay
+                        />
+                    ) : (
+                        <img
+                            key={index}
+                            src={img}
+                            className={`gallery-thumbnail ${index === currentIndex ? 'active' : ''}`}
+                            onClick={() => goToImage(index)}
+                        />
+                    );
+                })}
+            </div>
+        </div>
+    );
 }
 
 function BG() {
@@ -435,8 +613,8 @@ function Page() {
     }
 
     return <div>
-        <Header />
         <BG />
+        <Header />
         {/* <button onClick={handleClick}>Click {value}</button> */}
     </div>;
 }
