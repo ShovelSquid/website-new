@@ -355,8 +355,8 @@ body {
     text-align: left;
     font-weight: 100;
     width: calc(120px + 35%);
-    margin-top: 10vh; 
-    margin-bottom: 10vh;
+    margin-top: 5vh;
+    margin-bottom: 1vh;
     margin-left: calc(45px + 6vw);
 }
 
@@ -390,8 +390,8 @@ body {
     box-sizing: border-box;
     width: 90%;
     max-width: 1500px;
-    margin: 19vh auto 0;
-    height: 59vh;            /* fits between the page title and the fixed nav buttons */
+    margin: 2vh auto 0;      /* sits right below the title */
+    height: 82vh;
     text-align: left;
     transition: all 0.6s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
@@ -410,6 +410,7 @@ body {
     flex: 1 1 auto;
     min-width: 0;
     height: 100%;
+    margin-top: -7vh;        /* rise up beside the title, higher than the grid */
     overflow-y: auto;
 }
 
@@ -578,9 +579,9 @@ body {
     .projectsLayout {
         flex-direction: column;
         width: calc(100% - 40px);
-        margin: 16vh auto 0;
+        margin: 2vh auto 0;
         height: auto;
-        padding-bottom: 18vh; /* clear the fixed nav buttons */
+        padding-bottom: 8vh;
     }
 
     .galleryColumn,
@@ -589,6 +590,7 @@ body {
         width: 100%;
         max-width: 100%;
         height: auto;
+        margin-top: 0;       /* no upward offset when stacked */
         overflow: visible;
     }
 

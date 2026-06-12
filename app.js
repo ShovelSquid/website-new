@@ -28,8 +28,8 @@ function Lightbox({src, type, onClose}) {
     );
 }
 
-function Projects({section, onSelect}) {
-    const sections = ["2D Animation", "3D Animation", "3D Models", "Concept Art", "UI Icons", "Spritesheets", "Pixel Art", "Games"
+function Projects({section, onSelect, onPieceChange}) {
+    const sections = ["About Me", "Concept Art", "2D Animation", "3D Modeling/Animation", "Games", "Pixel Art", 
     ];
     const [isPending, startTransition] = React.useTransition();
     const [showContent, setShowContent] = React.useState(false);
@@ -59,10 +59,10 @@ function Projects({section, onSelect}) {
         </div>
     );
 
-    return <ProjectCollection section={section} categoryNav={categoryNav} ready={showContent} />;
+    return <ProjectCollection section={section} categoryNav={categoryNav} ready={showContent} onPieceChange={onPieceChange} />;
 }
 
-function ProjectCollection({section, categoryNav, ready}) {
+function ProjectCollection({section, categoryNav, ready, onPieceChange}) {
     const filepath = "assets/portfolio/" + section + "/";
     const [visibleCount, setVisibleCount] = React.useState(0);
     const [lightbox, setLightbox] = React.useState({ src: null, type: null });
@@ -71,31 +71,75 @@ function ProjectCollection({section, categoryNav, ready}) {
 
     const files = {
         "2D Animation": [
-            { file: "meg_ryan.mp4", description: "A looping 2D character animation exploring squash, stretch, and personality." },
+            // { file: "meg_ryan.mp4", description: "A looping 2D character animation exploring squash, stretch, and personality." },
+            { file: "fish.gif", description: "A 2D animated character loop showcasing fluid motion and personality." },
             { file: "grude.mp4" },
             { file: "groblin.gif" },
+            {
+                file: "KCGames.mp4",
+                description: `A Studio Logo design that I came up with; gave me hope to keep on going through the grind of game development. Something I really
+                want to play more with is the pure white text with thin color gradient highlights, mostly just around the edges. The whole idea of white with 
+                subtle blue and red on the edges is really satisfying to me, and I want to someday go really in depth on a shader that renders light properly on
+                pure white text, to showcase lights in a way that accentuates the white. Because, you know, when you think about it, white isn't blank, it's all of the 
+                colors mixed into one (thanks Newton and your filthy prism, just kidding it actually had to be really clean to reflect all that light), so when
+                you showcase some slight colors on the edges of whites, it actually makes it feel MORE white than blank white, because what you're describing visually
+                is the LIGHT being emanated, as opposed to the pure RGB color of 1 1 1. I don't know, something cool to think about, and something I want to explore more.`
+            },
+            {
+                file: "Radiation.mp4",
+                description: `Particles, lots and lots of particles. This honestly is one of the longer pieces I've done, and not cause of how
+                good the overall pose is; in my opinion, it's not that great, but really the particles are pretty awesome. I'm a huge fan of
+                animating particles-- whether it be by hand or through VFX like in Unity or Blender, but something about doing it by hand is really cool;
+                you sort of get to follow each one through from their birth to their end, and especially in these ones where they loop cleanly you have to
+                decide how their birth and end cycle into one another. Or really, how they keep on moving through only 4 frames of motion total (this one I think is 6?) 
+                but since it loops, you can continue the path of the individual particles for 8, 12, 24, 120, however many frames you want. Which is neat; it 
+                really is corny, but you do follow through and discover the story of each particle. Something you can really get lost in.`
+            },
+            
             // { file: "Human_Torch_Wout_Fire_Resistance.gif" },
             // { file: "movement.gif" },
             // { file: "Triangle_Shatter.gif" },
             // { file: "father_figure.mp4" },
-            { file: "punch.gif"},
+            // { file: "punch.gif"},
             // { file: "handcules.mp4" },
             // { file: "Man.mp4" },
             // { file: "mcdoodin.mp4" }
         ],
-        "3D Animation": [
+        "3D Modeling/Animation": [
             { file: "interceptor.mp4", description: "A 3D animated sequence focused on motion, weight, and timing." },
-            { file: "robot_walk_cycle.mp4" },
-            { file: "hunsk.mp4" },
+            // { file: "robot_walk_cycle.mp4" },
+            {
+                file: "altar.mp4",
+                title: "Flesh Altar",
+                description: `Playing around with making stone sculptures, as well as malleable tentacle rigs/models. Fun to texture and animate;
+                this was right around when I was just learning to sculpt and texture. Also, not to call out the guy's massive feet, they were normal before
+                but I showed this to my brother and accidentally resized them which caused us to have a laugh, and for the fun of it I decided to keep it like that.
+                The beauty of art, huh? All done in Blender, with some fun shader node setups for the lights on the ball.`
+            },
+            {
+                file: "Deserted_Robot.mp4",
+                title: "Deserted Robot",
+                description: `I created the model, texture and rig for this robot in Blender; This was for a concept for a game where you played as a sentient AI in a crash landed ship, merging with the flora 
+                and tasked with keeping it safe from rogue parent AI systems that were coming to try to scrap the ship. Breaking free from the programming,
+                becoming one with nature, that classic robot sentience story. I'm a huge fan of those types of, I wouldn't say abolitionist, growth-oriented stories?
+                Ones where robots, instead of becoming evil and following their programming to the letter, decide to either deviate or grow new patterns that weren't
+                explicitly implemented, and they happen to be very harmonious and curious by nature. Recently I started reading Becky Chambers, and her stories are 
+                truly wonderful, I believe were a big inspiration for the Wild Robot, which is another of my favorite movies.`
+            },
+            // { file: "hunsk.mp4" },
+            { file: "devil.gif", description: "A 3D model rendered out as an animated turntable." },
+            {
+                file: "gunGuy.mp4",
+                description: `A guy, with a gun. He's gun guy.`
+            },
             // { file: "MicroTurret.mp4" },
             // { file: "altar.mp4" },
             // { file: "sledger-full.mp4" },
-            { file: "hammer_showcase.mp4" },
-            { file: "Mikey.mp4" },
+            // { file: "hammer_showcase.mp4" },
+            // { file: "Mikey.mp4" },
             // { file: "devil.gif" }
         ],
         "3D Models": [
-            { file: "devil.gif", description: "A 3D model rendered out as an animated turntable." },
             { file: "Leg Bots.png" },
             { file: "MacroTurret.png" },
             { file: "sledger-full.mp4" },
@@ -104,28 +148,67 @@ function ProjectCollection({section, categoryNav, ready}) {
             { file: "walker.png" },
         ],
         "Concept Art": [
-            { file: "Robot_Types.png", description: "Concept exploration of robot types, silhouettes, and variations." },
-            { file: "Robot_Types_Presentation.png" },
-            { file: "Robot_Silhouettes.png" },
-            // { file: "Helldivers Sketches.png" },
-            // { file: "Design Ideation.png" },
-            { file: "Trash-Pits.png" },
-            { file: "Antaur.png" },
-            // { file: "Fighter_concept.png" },
+            // { file: "Robot_Types.png", description: "Concept exploration of robot types, silhouettes, and variations." },
+            // { file: "Robot_Types_Presentation.png" },
+            { 
+                file: "Octopourse.png", 
+                title: "Doctor Squid", 
+                description: `Professor Lin Quy Chi was not always a roboticist; in fact, in their youth, they spent much of their time
+                in the outdoors looking at bugs. Finding them to be quite relatable and really decently friendly, they developed an 
+                intense love for nature, and dedicated much of their life to immersing themselves in and connecting deeper with the
+                world around them. This love lead to frustration when their high school years came around, and they found themselves
+                struggling to connect with other students, becoming ostracized for their unusual interests. Linguistics sort of drifted 
+                into Lin's lap, yet was a natural fit. They were very good with systems and structural thinking, the inherent rules
+                underlying language became utterly fascinating to them; and it gave Lin the tools to be able to communicate their unusual interests effectively with the outside world. 
+                After studying Psycholinguistics and Pharmacology at the University of Seattle, Illinois, they became a translator for the UN, working with diplomats and scientists from all over the world.
+                Lin found that while they were truly talented at understanding the languages of humans, yet even with all that skill they
+                grew a gaping hole in their heart, and longed to translate the languages of animals, creatures, and even the mycelial
+                network which lines the entirety of the planet. They set to work creating a neural apparatus, capable of interfacing with
+                and automatically creating lexicons and syntactic structures based off of non-human patterns and stimuli; ostracizing themselves
+                from the world, instead of being ostracized. This led to the creation of the Psychic Inhabitor, the device which Lin uses
+                connected to their brain to communicate with other creatures. Lin communicated with a wide variety of oceanic and woodland
+                animals, learning many secrets, including how to build the incredible robotic arms and explosive devices they use to traverse
+                the world (the dolphins and squids are really quite talented at engineering). Lin has been forever grateful to nature, to their
+                education, and to the world which provides endless beauty and understanding to engage with.`
+            },
+            {
+                file: "entricles3.png",
+                title: "Entricles",
+                description: `Nefarious woodland fey creatures made out of wood. Created in a pact with the once witch made 
+                demon-king Nyoka, these beings are a cross hybrid between spiders and the woods themselves; a type of unholy 
+                arachnid made in the spare time of Nyoka which hunts living flesh and converts their organs into wood. They use 
+                the mandibles on their heads to grasp their victims after which they can then inject them with a glowing ichorous 
+                liquid, melting their insides and reforming them into a stable, long lasting structure. Great for the environment.`
+            },
+            {
+                file: "Paladin_Colors.png",
+                description: `Exploration of colors for a paladin character as a part of a game project I was a part of in college. 
+                Really the white and the orange was the best one, but I wanted to check out a few other styles to make sure there
+                wasn't one that was really cool that we were missing. The black and red eventually led to the red and green for the 
+                cursed version, which was interesting as sort of an opposing force to this type of character. The back is way too 
+                arched which really bothers me now, especially since I made it a while ago, but I thought it was a good showcase of
+                color exploration so I wanted to include it. Really though, they should see a doctor cause that back is messed up.`,
+            },
+            // { file: "Robot_Silhouettes.png" },
+            // // { file: "Helldivers Sketches.png" },
+            // // { file: "Design Ideation.png" },
+            // // { file: "Trash-Pits.png" },
+            // { file: "Antaur.png" },
+            // // { file: "Fighter_concept.png" },
             { file: "interceptor concept.png" },
-            { file: "Glassics.png" },
-            { file: "Tall_boy.png" },
-            { file: "string.jpeg" },
-            { file: "Shepherd.png" },
-            { file: "Wizard Blasties.png" },
-            { file: "Murder.png" },
-            { file: "Rock_Angels.png" },
-            { file: "Glasshead.png" },
-            // { file: "Design Sketch.png"},
-            // { file: "Fighter_Slash_Concept.png" },
-            // { file: "bimbus concept.png" },
-            // { file: "ruined_knights.png" },
-            // { file: "Soldier_Concept.png" }
+            // // { file: "Glassics.png" },
+            // // { file: "Tall_boy.png" },
+            // { file: "string.jpeg" },
+            // { file: "Shepherd.png" },
+            // { file: "Wizard Blasties.png" },
+            // { file: "Murder.png" },
+            // { file: "Rock_Angels.png" },
+            // // { file: "Glasshead.png" },
+            // // { file: "Design Sketch.png"},
+            // // { file: "Fighter_Slash_Concept.png" },
+            // // { file: "bimbus concept.png" },
+            // // { file: "ruined_knights.png" },
+            // // { file: "Soldier_Concept.png" }
         ],
         "Spritesheets": [
             { file: "boomer_sheet.png", description: "A sprite sheet laying out the animation frames for a game character." },
@@ -151,14 +234,64 @@ function ProjectCollection({section, categoryNav, ready}) {
             { file: "MenuUI.mp4" },
         ],
         "Pixel Art": [
-            { file: "Bamf.gif", description: "An animated pixel-art sprite built frame by frame." },
-            { file: "Crawler.gif" },
-            { file: "enor.gif" },
+            // { file: "Bamf.gif", description: "An animated pixel-art sprite built frame by frame." },
+            // { file: "Crawler.gif" },
+            // { file: "enor.gif" },
+            {
+                file: "GreatWyrm.png",
+                description: `Just a big ole, great ole big ole huge ole wyrm, amirite? Yeah. I don't really know what this is, to be honest. Which should scare me,
+                but for some reason I feel really fine with it. It's just Wyrmy, my big ole wyrm compatriot. Just floatin around the cosmic abyss, chillin, annihilating planets.
+                No biggie. I honestly feel like he'd be absolutely the chillest of fellas, like a real bloke you could sit down with and have a hearty chat, nothing too 
+                spiritual, but honestly some real big eye openers, maybe a 7/10 on the depth of emotion scale of chats; and then he'd float on his way and probably munch on your planet
+                afterwards. Just a real chill guy, with a mighty appetite. That's the thing about giant cosmic entities; yeah they could be evil and whatnot, but why would they care so much? 
+                The fear doesn't come from their malice, it comes from their need to consume, and at the massive scale that they're at, it's not their fault if they want to absorb all of human
+                society into the infinite cosmic void. It isn't! They didn't ask to be born that way, you know? If anything, blame the programmers of the universe. They're the real fucked-in-the-heads
+                type folks. Am I allowed to swear here? I apologize if I'm not. Anywho. Real fucked-in-the-heads type fellas.`
+            },
+            {
+                file: "MainCharacter.png",
+                title: "Knight Portrait",
+                description: `This was going to be a 2d pixel art portrait for dialogue in game for the greatest most spectacular nonexistent game that
+                never was. The idea was that you're a corporate knight in the mid-to-near future, working for McDonald's or whatever other massive corporation is currently
+                dominating the hemisphere. You know, there's not many rights, there's the illusion of control, of free will, but all of that comes through in the form of what 
+                apps you scroll, what reels you engage with. They send you into the mines, or really to offshore planets to secure mining bases and export resources back to Corporate HQ,
+                and they pay you a practically minimum wage in the good ole McDonald's dormitories to make you feel like you're really securing a living. Trying to capture the essence
+                of gig workers, like doordashers, if they were feudal knights. I think it's a fun concept, and I'm still trying to make it happen, one day at a time. Oh, and the CEOs you work for
+                are massive post-human entities that have far evolved beyond the scope of the earth, and now drift in the cosmos consuming energy with their massive tentacles. They're the real villains,
+                but you're forced to fight other knights because at the end of the day you need that paycheck. Your plants aren't gonna water themselves, you know?`
+            },
+            {
+                file: "Cruse.png",
+                title: "Knight Portrait 2",
+                description: `A rough concept for a selection screen for choosing your character. Trying to get a feel for the general outline/size that the 
+                character was going to fit in.`
+            },
+            {
+                file: "Banner.png",
+                title: "Infinite Cosmic Banner",
+                description: `For a while, I've sort of wanted to get into Youtube as a science content communicator, but then I realized that I don't know
+                much science. Don't get me wrong, I love science, physics and chemistry specifically, but I only studied it passingly in college, and don't have 
+                a crazy degree in it or anything. I would absolutely love to talk about the concepts and topics that I'm interested in, because genuinely they're a little
+                bit niche (carbon nanotubes anyone??! biofuels!!?), but spreading misinformation is also one of the topics highest on my list of things I don't want to do 
+                on a daily basis, so I sort of shrugged it off to the side for a perpetual amount of time. That being said, this was the type of "character" I came up with
+                to talk to the audience through. Sort of an infinitely massive cosmic entity that is far removed from humanity, but way too invested in the crazy stuff that's
+                happening in our world to not get super obsessed and watch over everything that's happening. Sort of a more comedic take on cosmic horror; I love the idea that
+                we aren't alone in the universe and that we do share space with the most infinite and timeless of Old Gods, but instead of being evil or malevolent they just kinda
+                don't really care all that much. Or are like, 'huh, neat.' It gives me great peace.`
+            },
+            {
+                file: "Eye1.png",
+                title: "Eyeball Character",
+                description: `Further along on the cosmic character design; this is an up close rendering of the character that would show during the video
+                when explaining topics. They have all the different expressions; confused, focused, surprised, disappointed; and I'd cycle through all of them depending on
+                the content that was being discussed. Could honestly work as another dialogue portrait, like the Knight one earlier, but for the CEO of McDonald's that you work for
+                in the mid-to-near future.`
+            },
             { file: "cursed_paladin_death.gif" },
-            { file: "ship.gif" },
-            { file: "Walking biped.gif" },
+            // { file: "ship.gif" },
+            // { file: "Walking biped.gif" },
             { file: "Ghoul.gif" },
-            { file: "Reload.gif" }
+            // { file: "Reload.gif" }
         ],
         "Weird Western": [
             { file: "Boomer.gif" },
@@ -170,19 +303,30 @@ function ProjectCollection({section, categoryNav, ready}) {
         ],
         "Games": [
             { file: "perihelion.mp4", link: "https://shovelsquid.itch.io/perihelion", description: "Gameplay from a personal game project. Use the link to play it." },
-            { file: "celestial_combat.mp4", link: "https://shovelsquid.itch.io/celestialcombat" },
+            { 
+                file: "celestial_combat.mp4",
+                description: `Gameplay from Celestial Combat, and endless runner/shooter/blatant Galaga clone I and two other people made in a weeklong sprint in college. 
+                All of the game art assets you see are mine, I created the void/stars in the background, the ship sprites, the bullet sprites, as well as the healthbar, and VFX. I 
+                programmed all of the hit VFX and game juice, the screenshake, particle effects, healthbar flying off when you get hurt, etc. This was coded in Phaser, which is a 
+                game library for Javascript (and a pretty jank one at that, but great for web games! Simple, web games. Very simple). Very fun! The original concept was to record your 
+                keystrokes and have your ghost reappear the next round over, accumulating more and more with more ghosts, both helping and hindering your performance, but it was scrapped for time.
+                Definitely a concept I'd love to return to in the future though.`, 
+                link: "https://shovelsquid.itch.io/celestialcombat" 
+            },
             { file: "GameFoot.mp4" },
             { file: "Gameplay Showcase.mp4", link: "https://store.steampowered.com/app/2968800/SLEDGE/" }
         ]
     }
-    const projects = files[section].map(item => ({
+    const projects = (files[section] || []).map(item => ({
         file: typeof item === 'string' ? item : item.file,
         link: typeof item === 'object' ? item.link : null,
         description: typeof item === 'object' ? item.description : null,
-        title: (typeof item === 'string' ? item : item.file)
-            .replace(/\.(jpg|jpeg|png|gif|mp4|webm)$/, '')
-            .replace(/-|_/g, ' ')
-            .replace(/\b\w/g, char => char.toUpperCase())
+        title: (typeof item === 'object' && item.title)
+            ? item.title
+            : (typeof item === 'string' ? item : item.file)
+                .replace(/\.(jpg|jpeg|png|gif|mp4|webm)$/, '')
+                .replace(/-|_/g, ' ')
+                .replace(/\b\w/g, char => char.toUpperCase())
     }));
 
     // Reset the highlighted item whenever the category changes
@@ -249,6 +393,14 @@ function ProjectCollection({section, categoryNav, ready}) {
     };
 
     const selected = projects[selectedIndex] || projects[0];
+    // "About Me" is a special category that shows the bio in the highlight column
+    const isAbout = section === "About Me";
+    const selectedTitle = isAbout ? "About Me" : (selected ? selected.title : null);
+
+    // Report the highlighted piece's title up so the page title can show it
+    React.useEffect(() => {
+        if (onPieceChange) onPieceChange(selectedTitle);
+    }, [selectedTitle, onPieceChange]);
 
     return (
         <>
@@ -257,7 +409,7 @@ function ProjectCollection({section, categoryNav, ready}) {
                 {/* Left: category switcher + gallery thumbnails */}
                 <div className="galleryColumn">
                     {categoryNav}
-                    {ready && (
+                    {!isAbout && ready && (
                         <div className="projectCollection">
                             {projects.slice(0, visibleCount).map((project, index) => (
                                 <div
@@ -273,28 +425,39 @@ function ProjectCollection({section, categoryNav, ready}) {
                     )}
                 </div>
 
-                {/* Right: highlighted view + description */}
+                {/* Right: highlighted view + description (or the About Me bio) */}
                 <div className="highlightColumn">
-                    {ready && selected && (
+                    {isAbout ? (
                         <div className="highlight">
                             <div className="highlight-media">
-                                {renderMedia(selected, 'highlight')}
+                                <img src="assets/images/me.jpg" alt="Kaelen Cook" />
                             </div>
-                            <h3 className="highlight-title">{selected.title}</h3>
-                            <p className="highlight-description">
-                                {selected.description || `A piece from my ${section} collection.`}
-                            </p>
-                            {selected.link && (
-                                <a
-                                    className="highlight-link"
-                                    href={selected.link}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-                                    Open project ↗
-                                </a>
-                            )}
+                            <h3 className="highlight-title">About Me</h3>
+                            <p className="highlight-description">Hello! I'm Kaelen, an artist/developer hybrid. I'm interested in making all kinds of games! I do ui, vfx, environments, characters, stories, and more. I love movies, comedy, and making games feel fun to play.</p>
+                            <p className="highlight-description">If you're interested in working together, please send me an email at <a href="mailto:kaelen1cook@gmail.com">kaelen1cook@gmail.com</a></p>
                         </div>
+                    ) : (
+                        ready && selected && (
+                            <div className="highlight">
+                                <div className="highlight-media">
+                                    {renderMedia(selected, 'highlight')}
+                                </div>
+                                <h3 className="highlight-title">{selected.title}</h3>
+                                <p className="highlight-description">
+                                    {selected.description || `A piece from my ${section} collection.`}
+                                </p>
+                                {selected.link && (
+                                    <a
+                                        className="highlight-link"
+                                        href={selected.link}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        Open project ↗
+                                    </a>
+                                )}
+                            </div>
+                        )
                     )}
                 </div>
             </div>
@@ -340,8 +503,11 @@ function Contact() {
 function Header() {
 
     const pages = ["About", "Projects", "Contact"];
-    const [state, setState] = React.useState(null);
+    // Projects is the base/landing view
+    const [state, setState] = React.useState("projects");
     const [section, setSection] = React.useState("2D Animation");
+    // Title of the currently highlighted piece, reported up from ProjectCollection
+    const [pieceTitle, setPieceTitle] = React.useState(null);
     let content = null;
     let mainTitle = "Kaelen Cook";
     let subTitle = "Artist & Developer";
@@ -380,10 +546,12 @@ function Header() {
 
     function selectSection(section) {
         setSection(section);
+        setPieceTitle(null); // fall back to the category name until the new piece reports in
         console.log(`Section selected: ${section}`); // Add this to debug
     }
     if (state === "about") mainTitle = "About Me";
-    if (state === "projects" && section) mainTitle = section;  // Use the section state here
+    // In projects, the title is the highlighted piece (falls back to the category name)
+    if (state === "projects") mainTitle = pieceTitle || section;
     if (state === "contact") mainTitle = "Contact Me";
     if (state === "links") mainTitle = "Links";
     if (state === "blog") mainTitle = "Blog";
@@ -392,9 +560,8 @@ function Header() {
         {state === null && <Gallery></Gallery>}
         <Title title={mainTitle} id="main" />
         {/* <Title title={state ? state.charAt(0).toUpperCase() + state.slice(1) : subTitle} id="sub"/> */}
-        {state !== null && <BackButton id="back" onClick={back} page={'BackIcon'}/>}
         {state === "about" && <About />}
-        {state === "projects" && <Projects section={section} onSelect={selectSection}/>}
+        {state === "projects" && <Projects section={section} onSelect={selectSection} onPieceChange={setPieceTitle}/>}
         {state === "contact" && <Contact />}
         {/* {state === "links" && <Title title="Links" />} */}
         {/* {state === "blog" && <Title title="Blog" />} */}
