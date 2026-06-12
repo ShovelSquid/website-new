@@ -72,12 +72,26 @@ function ProjectCollection({section, categoryNav, ready, onPieceChange}) {
     const files = {
         "2D Animation": [
             // { file: "meg_ryan.mp4", description: "A looping 2D character animation exploring squash, stretch, and personality." },
-            { file: "fish.gif", description: "A 2D animated character loop showcasing fluid motion and personality." },
-            { file: "grude.mp4" },
-            { file: "groblin.gif" },
+            { file: "fish.gif", 
+                description: `Look, it's a fish! I actually made this small animation for a game company that I was applying to a while ago, to try and show them that I was totally capable of animating
+                characters in the style of their game. It didn't work, I didn't get the job, but I did get the satisfaction of animating this epic fish. Pretty fun stuff, 10/10 no regrets.`
+            },
+            { 
+                file: "grude.mp4",
+                title: "Dance Man",
+                description: `Man of dance. Look at him go, this lil guy. He's a real goober, if I've ever seen one. I really like the style of animating by going one body part at a time; starting with the circular
+                motion of the head, doing a circle one frame at a time, going pretty quickly. Then, I add the circles for the hands, to sketch out the general outline. Then, it's the feet, and then, you get the general
+                body shape, where you work backwards to get the position from the hands/feet to the shoulders/hips, and then fill in the gaps. You really only do a little bit of work, and then the rest is filling it all in,
+                coloring it, etc. Then, afterwards, you can add all the details you want; from the face, to the texture, to the lighting, the whole shebang. That's sort of my process. `
+            },
+            { file: "groblin.gif",
+                title: "Sudden Impact",
+                description: `Nooo, Goblin, look out! It's a mysteriously placed extremely fast buzz saw flying through the air at Mach 3! Watch out-- aaaand he's gone. Off to the abyss with him.
+                I guess his teeth stayed, though. Pretty strong stuff if you ask me; a rather sturdy material, those teeth. Sturdy indeed.`
+            },
             {
                 file: "KCGames.mp4",
-                description: `A Studio Logo design rfthat I came up with; gave me hope to keep on going through the grind of game development. Something I really
+                description: `A Studio Logo design that I came up with; gave me hope to keep on going through the grind of game development. Something I really
                 want to play more with is the pure white text with thin color gradient highlights, mostly just around the edges. The whole idea of white with 
                 subtle blue and red on the edges is really satisfying to me, and I want to someday go really in depth on a shader that renders light properly on
                 pure white text, to showcase lights in a way that accentuates the white. Because, you know, when you think about it, white isn't blank, it's all of the 
@@ -147,11 +161,17 @@ function ProjectCollection({section, categoryNav, ready, onPieceChange}) {
             },
             {
                 file: "gunGuy.mp4",
-                description: `A guy, with a gun. He's gun guy. Just some guns I modeled recently, as well as a pickaxe. Based off of the Colt 1911 and the Sig SG550.
+                description: `A guy, with a gun. He's gun guy. Just some guns I modeled recently. Based off of the Colt 1911 and the Sig SG550. And a pickaxe, I guess.
                 I do really love the texturing style of smaller textures, pixel art style but with beautiful strokes and organic details; this person is more subtle, 
                 but it's really neat blend of styles, from the old school limited file size and dithering necessary for basic rendering, mixed with the capabilities of 
                 modern software, and the organic strokes of hand painting. It's really neat, and is a cool aesthetic.`
             },
+            {
+                file: "MINERALS.png",
+                description: `Some mineral models I made for a personal project; tuning the colors gives you iron, gold, diamonds, emeralds, you name it. Not only are there different colors,
+                but also different damage states, for swapping out the models based off of how mined each of the veins are. We have small thin veins, large veins, as well as item drops/ore chunks
+                you can pick up. Fun stuff, very zesty, very tasty.`
+            }
             // { file: "MicroTurret.mp4" },
             // { file: "altar.mp4" },
             // { file: "sledger-full.mp4" },
@@ -373,7 +393,13 @@ function ProjectCollection({section, categoryNav, ready, onPieceChange}) {
             { file: "Thunkalunkadunkus.gif" }
         ],
         "Games": [
-            { file: "perihelion.mp4", link: "https://shovelsquid.itch.io/perihelion", description: "Gameplay from a personal game project. Use the link to play it." },
+            { file: "PerihelionGameplayShort.mp4", 
+                title: "Perihelion",
+                description: `A personal game project that I'm working on; looking to create a prototype and release an early access version on Steam soon. Everything you see was fully done by me myself and I;
+                I did all the art, animations, and coding. The pixel art style is a custom shader, which renders to a render texture, pixelizes the image, and then that render texture is passed to the camera which outputs the image.
+                The game is still being actively developed, and what you see is a hardcore prototype, but I feel it looks really cool, and showcases my ability to be a solo game developer. The game is about mining resources, using them to 
+                build units, and then sending them out in waves to mine more resources. Resources are spread out far across the map, and units cost fuel to exist. Trade routes are a big part of the game, because of how far resources are from each other,
+                and a large part of the game is looking where and when you can attack supply routes to disable your opponent's infrastructure and gain a leg up.` },
             { 
                 file: "celestial_combat.mp4",
                 description: `Gameplay from Celestial Combat, and endless runner/shooter/blatant Galaga clone I and two other people made in a weeklong sprint in college. 
@@ -524,7 +550,7 @@ function ProjectCollection({section, categoryNav, ready, onPieceChange}) {
                                 <img src="assets/images/me.jpg" alt="Kaelen Cook" />
                             </div>
                             <h3 className="highlight-title">About Me</h3>
-                            <p className="highlight-description">Hello! My name is Kaelen Cook, and I am a game developer. I love all aspects of developing games, from concept art and animation to programming and sound design. I love writing, humor and witticisms, and real world grounded science fiction. I've made a few games in my time, and plan to make more; so if you'd like to check that out, mosey on through my porfolio and take a look at some of the work I've done! I hope you have a decently not bad day (a pretty good one if you're feeling spicy).</p>
+                            <p className="highlight-description">Hello! My name is Kaelen Cook, and I am a game developer. I love all aspects of developing games, from concept art and animation to programming and sound design. I love writing, humorous witticisms, and real world grounded science fiction. I've made a few games in my time, and plan to make more; so if you'd like to check that out, mosey on through my porfolio and take a look at some of the work I've done! I hope you have a decently not bad day (and maybe even a pretty good one if you're feeling spicy).</p>
                             <p className="highlight-description">If you'd like to reach me, or any of my compatriots, my email is <a href="mailto:kaelen1cook@gmail.com">kaelen1cook@gmail.com</a></p>
                         </div>
                     ) : (
@@ -647,7 +673,7 @@ function Header() {
     if (state === "links") mainTitle = "Links";
     if (state === "blog") mainTitle = "Blog";
     return <div className={`main ${state || ''}`}>
-        <PullDrawer onNavigate={handleClick} onHome={back} />
+        {/* <PullDrawer onNavigate={handleClick} onHome={back} /> */}
         {state === null && <Gallery></Gallery>}
         <Title title={mainTitle} id="main" />
         {/* <Title title={state ? state.charAt(0).toUpperCase() + state.slice(1) : subTitle} id="sub"/> */}
