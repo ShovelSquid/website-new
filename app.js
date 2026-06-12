@@ -29,7 +29,7 @@ function Lightbox({src, type, onClose}) {
 }
 
 function Projects({section, onSelect, onPieceChange}) {
-    const sections = ["About Me", "Concept Art", "2D Animation", "3D Modeling/Animation", "Games", "Pixel Art", 
+    const sections = ["About Me", "Concept Art", "2D Animation", "3D Modeling/Animation", "Pixel Art",  "Games" 
     ];
     const [isPending, startTransition] = React.useTransition();
     const [showContent, setShowContent] = React.useState(false);
@@ -77,7 +77,7 @@ function ProjectCollection({section, categoryNav, ready, onPieceChange}) {
             { file: "groblin.gif" },
             {
                 file: "KCGames.mp4",
-                description: `A Studio Logo design that I came up with; gave me hope to keep on going through the grind of game development. Something I really
+                description: `A Studio Logo design rfthat I came up with; gave me hope to keep on going through the grind of game development. Something I really
                 want to play more with is the pure white text with thin color gradient highlights, mostly just around the edges. The whole idea of white with 
                 subtle blue and red on the edges is really satisfying to me, and I want to someday go really in depth on a shader that renders light properly on
                 pure white text, to showcase lights in a way that accentuates the white. Because, you know, when you think about it, white isn't blank, it's all of the 
@@ -106,7 +106,13 @@ function ProjectCollection({section, categoryNav, ready, onPieceChange}) {
             // { file: "mcdoodin.mp4" }
         ],
         "3D Modeling/Animation": [
-            { file: "interceptor.mp4", description: "A 3D animated sequence focused on motion, weight, and timing." },
+            { 
+                file: "interceptor.mp4", 
+                description: `One of the other members of our team made the model for this character, but I made the rig, the animation, and the lighting.
+                A scout/sniper enemy for Sledge, a game I worked on starting in college and a little beyond. The animation isn't perfect; for one, the hands don't grasp the weapons
+                with their fingers (though they are rigged to be able to), and the legs are a little too stable, it could use some more looking around and secondary action. It's well lit though,
+                and showcases off the concept well. Overall, I'd rate it Not Bad / 10.` 
+            },
             // { file: "robot_walk_cycle.mp4" },
             {
                 file: "altar.mp4",
@@ -127,10 +133,24 @@ function ProjectCollection({section, categoryNav, ready, onPieceChange}) {
                 truly wonderful, I believe were a big inspiration for the Wild Robot, which is another of my favorite movies.`
             },
             // { file: "hunsk.mp4" },
-            { file: "devil.gif", description: "A 3D model rendered out as an animated turntable." },
+            { 
+                file: "devil.gif", 
+                description: `Showcase of a blender pixel art aesthetic; scaling down and then scaling up the image in the compositor to create a pixel art effect with 
+                3d models. Also a bit of organic sculpting, nothing too fancy. I really think that the bloom shines through with the pixel art effect; it makes the glow feel
+                so much more chunky and crisp; it's got the same feeling as like rain on windows, or scratching a vinyl to me. Just intensely satisfying, and primordially 
+                soothing. Not to use more grandiose adjectives, but it really does bring me a great deal of peace, and it's the aesthetic that I'm currently using in my most 
+                recent Unity game project that I'm working on. This is a simple shader, and to recreate it in Unity is not very hard, one of the easier shaders to begin with in my 
+                opinion. Yet, it works really well. In Unity, what I am doing is rendering to a render texture, and then using that render texture in a shader to apply the pixel effect,
+                dividing the UVs by a scalar that you can control in the material to determine how pixellated you want the screen to be. Then, multiplying by that scalar to bring it back up
+                to its original size. It's separated in the camera passes from the UI layers, so it only renders on the screen, which feels really nice and keeps the whole game looking crisp. You
+                can find the game on the games tab.`,
+            },
             {
                 file: "gunGuy.mp4",
-                description: `A guy, with a gun. He's gun guy.`
+                description: `A guy, with a gun. He's gun guy. Just some guns I modeled recently, as well as a pickaxe. Based off of the Colt 1911 and the Sig SG550.
+                I do really love the texturing style of smaller textures, pixel art style but with beautiful strokes and organic details; this person is more subtle, 
+                but it's really neat blend of styles, from the old school limited file size and dithering necessary for basic rendering, mixed with the capabilities of 
+                modern software, and the organic strokes of hand painting. It's really neat, and is a cool aesthetic.`
             },
             // { file: "MicroTurret.mp4" },
             // { file: "altar.mp4" },
@@ -152,7 +172,7 @@ function ProjectCollection({section, categoryNav, ready, onPieceChange}) {
             // { file: "Robot_Types_Presentation.png" },
             { 
                 file: "Octopourse.png", 
-                title: "Doctor Squid", 
+                title: "Doctor Duopus", 
                 description: `Professor Lin Quy Chi was not always a roboticist; in fact, in their youth, they spent much of their time
                 in the outdoors looking at bugs. Finding them to be quite relatable and really decently friendly, they developed an 
                 intense love for nature, and dedicated much of their life to immersing themselves in and connecting deeper with the
@@ -189,13 +209,39 @@ function ProjectCollection({section, categoryNav, ready, onPieceChange}) {
                 arched which really bothers me now, especially since I made it a while ago, but I thought it was a good showcase of
                 color exploration so I wanted to include it. Really though, they should see a doctor cause that back is messed up.`,
             },
+            {
+                file: "bimbus concept.png",
+                title: "Egg Sacs",
+                description: `Sentient egg sacs from the stars; eldritch monsters which have invaded the serene town of Lovewater. 
+                These dastardly devils drain the love out of our town and use it to feed their wild machinations. Set in the Weird West, a fantasy version of
+                the American Old West. These creatures scuttle around, growing the eyes in their eggs, which eventually hatch and then fly around, acting as scouts,
+                and also insemminating the crawlers to create more eggs. The longer the crawlers live, the more eggs they grow, eventually turning into massive blobulous
+                piles of eggs, and then finally, one massive egg.`
+            },
             // { file: "Robot_Silhouettes.png" },
             // // { file: "Helldivers Sketches.png" },
             // // { file: "Design Ideation.png" },
             // // { file: "Trash-Pits.png" },
             // { file: "Antaur.png" },
             // // { file: "Fighter_concept.png" },
-            { file: "interceptor concept.png" },
+            { 
+                file: "interceptor concept.png",
+                description: `I really want to just show the newest and best stuff I work on, since it is my portfolio and people want to look through it quickly,
+                but here is some concept art for one of the Interceptor enemies that you face off on in Sledge. This is an older artsyle, more pen-reliant, and I don't like
+                looking back on it, but I wanted to include it since you can see the model that's based off of it, and it is work that was put into an actual game that I worked on.
+                I've become a lot better since then, but still here it is. Ta-da!`
+
+            },
+            {
+                file: "Robot_Types.png",
+                title: "Sledge Robot Concepts",
+                description: `Concepts for the main shooter enemy in Sledge; Exploring different head shapes, body types, and transportation modes. A big
+                thing in the game is the concept of gravity, weight, and magnetism, and I really wanted to explore how futuristic highly intelligent AI could
+                feel timeless and not like a classic terminator design; a big part of that comes with the robot's relationship to physics, using massive balls
+                of metal for limbs, as weapons, as religious objects, whatever. Keeping things simple as oppoesed to overly complex and techy; trying to scale down
+                instead of out. Overall, I feel I did a decent job; they look interesting and unique, but I really wanted to convey more of the new world they were creating,
+                uninhibited by the old rules, yet still abiding by the rules of physics. Cool stuff overall.`
+            }
             // // { file: "Glassics.png" },
             // // { file: "Tall_boy.png" },
             // { file: "string.jpeg" },
@@ -238,17 +284,6 @@ function ProjectCollection({section, categoryNav, ready, onPieceChange}) {
             // { file: "Crawler.gif" },
             // { file: "enor.gif" },
             {
-                file: "GreatWyrm.png",
-                description: `Just a big ole, great ole big ole huge ole wyrm, amirite? Yeah. I don't really know what this is, to be honest. Which should scare me,
-                but for some reason I feel really fine with it. It's just Wyrmy, my big ole wyrm compatriot. Just floatin around the cosmic abyss, chillin, annihilating planets.
-                No biggie. I honestly feel like he'd be absolutely the chillest of fellas, like a real bloke you could sit down with and have a hearty chat, nothing too 
-                spiritual, but honestly some real big eye openers, maybe a 7/10 on the depth of emotion scale of chats; and then he'd float on his way and probably munch on your planet
-                afterwards. Just a real chill guy, with a mighty appetite. That's the thing about giant cosmic entities; yeah they could be evil and whatnot, but why would they care so much? 
-                The fear doesn't come from their malice, it comes from their need to consume, and at the massive scale that they're at, it's not their fault if they want to absorb all of human
-                society into the infinite cosmic void. It isn't! They didn't ask to be born that way, you know? If anything, blame the programmers of the universe. They're the real fucked-in-the-heads
-                type folks. Am I allowed to swear here? I apologize if I'm not. Anywho. Real fucked-in-the-heads type fellas.`
-            },
-            {
                 file: "MainCharacter.png",
                 title: "Knight Portrait",
                 description: `This was going to be a 2d pixel art portrait for dialogue in game for the greatest most spectacular nonexistent game that
@@ -263,9 +298,20 @@ function ProjectCollection({section, categoryNav, ready, onPieceChange}) {
             {
                 file: "Cruse.png",
                 title: "Knight Portrait 2",
-                description: `A rough concept for a selection screen for choosing your character. Trying to get a feel for the general outline/size that the 
-                character was going to fit in.`
+                description: `A rough concept for a selection screen for choosing your character, getting a feel for the general outline/size that the 
+                character would be able to fit in.`
             },
+            // {
+            //     file: "GreatWyrm.png",
+            //     description: `Just a big ole, great ole big ole huge ole wyrm, amirite? Yeah. I don't really know what this is, to be honest. Which should scare me,
+            //     but for some reason I feel really fine with it. It's just Wyrmy, my big ole wyrm compatriot. Just floatin around the cosmic abyss, chillin, annihilating planets.
+            //     No biggie. I honestly feel like he'd be absolutely the chillest of fellas, like a real bloke you could sit down with and have a hearty chat, nothing too 
+            //     spiritual, but honestly some real big eye openers, maybe a 7/10 on the depth of emotion scale of chats; and then he'd float on his way and probably munch on your planet
+            //     afterwards. Just a real chill guy, with a mighty appetite. That's the thing about giant cosmic entities; yeah they could be evil and whatnot, but why would they care so much? 
+            //     The fear doesn't come from their malice, it comes from their need to consume, and at the massive scale that they're at, it's not their fault if they want to absorb all of human
+            //     society into the infinite cosmic void. It isn't! They didn't ask to be born that way, you know? If anything, blame the programmers of the universe. They're the real fucked-in-the-heads
+            //     type folks. Am I allowed to swear here? I apologize if I'm not. Anywho. Real fucked-in-the-heads type fellas.`
+            // },
             {
                 file: "Banner.png",
                 title: "Infinite Cosmic Banner",
@@ -287,10 +333,35 @@ function ProjectCollection({section, categoryNav, ready, onPieceChange}) {
                 the content that was being discussed. Could honestly work as another dialogue portrait, like the Knight one earlier, but for the CEO of McDonald's that you work for
                 in the mid-to-near future.`
             },
-            { file: "cursed_paladin_death.gif" },
+            { file: "cursed_paladin_death.gif",
+                description: `Death of a cursed paladin; this was for a TTRPG project I was a part of in college. You controlled a necromancer who was fighting off angels, and turning them to your
+                dark side to fight back the tides of heaven. The original design for the paladin is in the concept art page, and you can see some different color variations.`
+             },
             // { file: "ship.gif" },
             // { file: "Walking biped.gif" },
-            { file: "Ghoul.gif" },
+            { file: "Ghoul.gif" ,
+                description: `A ghoulish ghoul, devilish and dastardly. Don't come close, she will bite. That's just how she says hello, though.`
+            },
+            { file: "dingus.gif ",
+                description: `An alien invading the peaceful town of Lovewater, a town set in the Weird West, a fantasy version of the American Old West. Crazy Old Joe ain't just seeing things,
+                (or feeling things), these aliens exist, and they're roaming around, looking for new and exciting places to probe, and farmers to absorb.`
+             },
+            {
+                file: "MenuUI.mp4",
+                description: `Some menu UI for sledge that I worked on; exclusively the buttons on the pause screen that you mouse over and click on. They are sliced
+                sprites, which have an animation for hovering, clicking, releasing, etc. I could've programmed the size increases and decreases, or used an animation curve,
+                but I found using regular animations to work well and gave it a more personal flair that felt really nice. Next time though I'd probably use the AnimationCurves, as they
+                are more professional, can be applied to a wide variety of buttons instead of just one type.`
+            },
+            {
+                file: "wizard_animation_death.gif",
+                title: "Wizard Death",
+                description: `Death animation for the wizard character in Monkey in the Machine, a game I worked on while I was at Darkburn Creative, released in the Fortnite Arcade. 
+                You can't play it, as it never released (the company didn't release it), but you can read more about it on the Games page. This project helped me a lot to learn about how to use
+                blurring and fuzzing when it comes to pixel art, as opposed to pure 0 or 1 areas. I really improved throughout the whole process; for this animation, I didn't create the base design of the character,
+                I started with a pixel art image of the wizard (with many layers) and animated the face falling apart, smoke coming out, and explosion ripping it apart. It was a ton of fun! I would absolutely do this again
+                in a heartbeat (though next time they better release the game).`
+            }
             // { file: "Reload.gif" }
         ],
         "Weird Western": [
@@ -313,8 +384,28 @@ function ProjectCollection({section, categoryNav, ready, onPieceChange}) {
                 Definitely a concept I'd love to return to in the future though.`, 
                 link: "https://shovelsquid.itch.io/celestialcombat" 
             },
-            { file: "GameFoot.mp4" },
-            { file: "Gameplay Showcase.mp4", link: "https://store.steampowered.com/app/2968800/SLEDGE/" }
+            // { file: "GameFoot.mp4" },
+            {
+                file: "Wizardo.mp4",
+                title: "Monkey in the Machine",
+                description: `An ad game for Wizard of Oz that I worked on while I was at Darkburn Creative, released in the Fortnite Arcade. You can't play it, as it never released (the company didn't release it),
+                but I worked on the wizard animations (based off of our art director's awesome art), as well as the monkey animations, the balloons swooshing in the back, the clouds, and all of the smoke/pipes/furnace effects. All of the animation,
+                basically. I was the main 2d animator for this project. I also helped on a lot of coding; we were making this game in UEFN, Unreal Engine for Fortnite, which meant that we were doing a lot of hacking with materials
+                to get to play a 2d game in a 3d only highly limited game engine. Overall, a really impressive proof of concept in my book, and a really cool showcase of how to work within an engine that isn't supported for 2d, but how
+                to jerry rig it to get it to do it anyway. I worked on the collision logic for jumping up above platforms (having them not be collidable above but be collidable below), as well as respawning, endscreen UI, projectile FX, and temp sound effects.
+                A really fun time! I loved the people I was working with, and really enjoyed the process. All of the background (besides the clouds and balloons) is our main art director's incredible work.`
+            },
+            { 
+                file: "sledge.jpg",
+                link: "https://store.steampowered.com/app/2968800/SLEDGE/",
+                description: `Sledge! A game I worked on my senior year of college at UCSC, and for a little while after that. It is a 3d fast paced platformer
+                where you use a sledgehammer to rocket yourself around the map, taking on a rogue AI intelligence that has slain the Gods of our world. You are tasked
+                with chasing down and destroying God, the creator of the machines, before it can build a Dyson Sphere and subjugate all of humanity. I worked on the 3d player animations,
+                as well as the enemy animations, as well as some of the VFX, and the UI you see on screen (the heart icon animations, getting hit/bouncing, powerups, and the cursor charging up).
+                I also programmed a few things, namely in the name of Juice; the UI moving around as you move, the healthbar heart logic, as well as ragdoll physics for the enemies when they are destroyed.
+                Concept art was also a big thing I did; all of the designs for the enemies were created by me, which you can see in the concept art page of my portfolio. I also
+                worked a lot on the lore for the game with the rest of our team. Released 6/12/2026.`
+            }
         ]
     }
     const projects = (files[section] || []).map(item => ({
@@ -433,8 +524,8 @@ function ProjectCollection({section, categoryNav, ready, onPieceChange}) {
                                 <img src="assets/images/me.jpg" alt="Kaelen Cook" />
                             </div>
                             <h3 className="highlight-title">About Me</h3>
-                            <p className="highlight-description">Hello! I'm Kaelen, an artist/developer hybrid. I'm interested in making all kinds of games! I do ui, vfx, environments, characters, stories, and more. I love movies, comedy, and making games feel fun to play.</p>
-                            <p className="highlight-description">If you're interested in working together, please send me an email at <a href="mailto:kaelen1cook@gmail.com">kaelen1cook@gmail.com</a></p>
+                            <p className="highlight-description">Hello! My name is Kaelen Cook, and I am a game developer. I love all aspects of developing games, from concept art and animation to programming and sound design. I love writing, humor and witticisms, and real world grounded science fiction. I've made a few games in my time, and plan to make more; so if you'd like to check that out, mosey on through my porfolio and take a look at some of the work I've done! I hope you have a decently not bad day (a pretty good one if you're feeling spicy).</p>
+                            <p className="highlight-description">If you'd like to reach me, or any of my compatriots, my email is <a href="mailto:kaelen1cook@gmail.com">kaelen1cook@gmail.com</a></p>
                         </div>
                     ) : (
                         ready && selected && (
