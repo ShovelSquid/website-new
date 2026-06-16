@@ -551,7 +551,7 @@ function ProjectCollection({section, categoryNav, ready, onPieceChange}) {
                                 <img src="assets/images/me.jpg" alt="Kaelen Cook" />
                             </div>
                             <h3 className="highlight-title">About Me</h3>
-                            <p className="highlight-description">Hello! My name is Kaelen Cook, and I am a game developer. I love all aspects of developing games, from concept art and animation to programming and sound design. I love writing, humorous witticisms, and real world grounded science fiction. I've made a few games in my time, and plan to make more; so if you'd like to check that out, mosey on through my porfolio and take a look at some of the work I've done! I hope you have a decently not bad day (and maybe even a pretty good one if you're feeling spicy).</p>
+                            <p className="highlight-description">Hello! My name is Kaelen Cook, and I am a game developer. I love all aspects of developing games, from concept art and animation to programming and sound design. I love writing, humorous witticisms, and real world grounded science fiction. I've made a few games in my time, and plan to make more; so if you'd like to check that out, mosey on through my porfolio and take a look at some of the work I've done! I hope you have a decently not bad day (and maybe even a pretty good one if you're feeling zesty).</p>
                             <p className="highlight-description">If you'd like to reach me, or any of my compatriots, my email is <a href="mailto:kaelen1cook@gmail.com">kaelen1cook@gmail.com</a></p>
                         </div>
                     ) : (
