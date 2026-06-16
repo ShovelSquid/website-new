@@ -1,3 +1,4 @@
+/* @jsxRuntime classic */
 const domNode = document.getElementById('app');
 const root = ReactDOM.createRoot(domNode);
 
