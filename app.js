@@ -101,7 +101,7 @@ function ProjectCollection({section, categoryNav, ready, onPieceChange}) {
                 is the LIGHT being emanated, as opposed to the pure RGB color of 1 1 1. I don't know, something cool to think about, and something I want to explore more.`
             },
             {
-                file: "Radiation.MP4",
+                file: "Radiation.mp4",
                 description: `Particles, lots and lots of particles. This honestly is one of the longer pieces I've done, and not cause of how
                 good the overall pose is; in my opinion, it's not that great, but really the particles are pretty awesome. I'm a huge fan of
                 animating particles-- whether it be by hand or through VFX like in Unity or Blender, but something about doing it by hand is really cool;
