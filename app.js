@@ -172,10 +172,13 @@ function ProjectCollection({section, categoryNav, ready, onPieceChange}) {
                 description: `Some mineral models I made for a personal project; tuning the colors gives you iron, gold, diamonds, emeralds, you name it. Not only are there different colors,
                 but also different damage states, for swapping out the models based off of how mined each of the veins are. We have small thin veins, large veins, as well as item drops/ore chunks
                 you can pick up. Fun stuff, very zesty, very tasty.`
-            }
+            },
             // { file: "MicroTurret.mp4" },
             // { file: "altar.mp4" },
-            // { file: "sledger-full.mp4" },
+            { file: "sledger-full.mp4",
+                title: "Hevn's Gaze",
+                description: `This is some more Sledge machine concept content, but really more of a character rig/animation that I made and had fun with. Look at him go, bobbing and weaving. I'd probably add some more secondary action to the lower part of the body, but I think it's pretty cool overall.`
+             }
             // { file: "hammer_showcase.mp4" },
             // { file: "Mikey.mp4" },
             // { file: "devil.gif" }
